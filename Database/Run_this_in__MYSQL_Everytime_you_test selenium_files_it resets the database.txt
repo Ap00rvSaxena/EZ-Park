@@ -1,0 +1,12 @@
+DELETE FROM `parking_system`.`user` WHERE (`username` = 'testadmin1') or (`username` = 'testmanager1') or (`username` = 'testuser1') ;
+UPDATE USER SET firstname='user', lastname='user',  email='user@gmail.com', password='user', role='USER', utaid='1234567890', phone='6824082780',  streetaddress='abcde',  city='abcde', state='AB', zipcode=12340, vehiclenumber='9123456', status='Active', permit='BASIC', comments='you are active' WHERE username='user';
+UPDATE `parking_system`.`parkingspot_details` SET `starttime` = '0', `endtime` = '0', `reservationid` = NULL WHERE (`ParkingspotID` = 'DV1FB1');
+
+
+UPDATE `parking_system`.`parkingspot_details` SET `Availability` = 'AVAILABLE' WHERE (`ParkingspotID` = 'DV1FB1');
+
+
+UPDATE parkingspot_details SET Availability = 'AVAILABLE', starttime = 0, endtime = 0 , reservationid = 'NULL' WHERE ParkingspotID='DV1FB2';
+delete from reservation where username='user' or username='testuser';
+INSERT INTO `reservation` VALUES ('r4','user4','DV1FB1',1600,1900,'BASIC','Davis',1,1,0,sysdate(),NULL,'1236547',0,1,0,'$15.95');
+

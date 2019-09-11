@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>UserErrorMsgs.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Apr 30, 2019 2:10:14 AM)</a> &gt; <a href="../../index.html" class="el_group">parking_system</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">parking_system.model</a> &gt; <span class="el_source">UserErrorMsgs.java</span></div><h1>UserErrorMsgs.java</h1><pre class="source lang-java linenums">package parking_system.model;
+
+public class UserErrorMsgs {
+	
+	private String errorMsg;
+	private String userNameError;
+	private String userFirstNameError;
+	private String userLastNameError;
+	private String userEmailError;
+	private String userPasswordError;
+	private String utaIDerror;
+	private String phoneError;
+	private String streetAddError;
+	private String cityError;
+	private String stateError;
+	private String zipCodeError;
+	private String vehicleNumberError;
+	
+	private String searchError;
+	
+<span class="fc" id="L21">	public UserErrorMsgs() {</span>
+		//super();
+<span class="fc" id="L23">		this.errorMsg = &quot;&quot;;</span>
+<span class="fc" id="L24">		this.userNameError = &quot;&quot;;</span>
+<span class="fc" id="L25">		this.userFirstNameError = &quot;&quot;;</span>
+<span class="fc" id="L26">		this.userLastNameError = &quot;&quot;;</span>
+<span class="fc" id="L27">		this.userEmailError = &quot;&quot;;</span>
+<span class="fc" id="L28">		this.userPasswordError = &quot;&quot;;</span>
+<span class="fc" id="L29">		this.utaIDerror = &quot;&quot;;</span>
+<span class="fc" id="L30">		this.phoneError = &quot;&quot;;</span>
+<span class="fc" id="L31">		this.streetAddError = &quot;&quot;;</span>
+<span class="fc" id="L32">		this.cityError = &quot;&quot;;</span>
+<span class="fc" id="L33">		this.stateError = &quot;&quot;;</span>
+<span class="fc" id="L34">		this.zipCodeError = &quot;&quot;;</span>
+<span class="fc" id="L35">		this.vehicleNumberError = &quot;&quot;;</span>
+<span class="fc" id="L36">		this.searchError = &quot;&quot;;</span>
+<span class="fc" id="L37">	}</span>
+
+	
+	public String getErrorMsg() {
+<span class="fc" id="L41">		return errorMsg;</span>
+	}
+
+	public void setErrorMsg(String action) {
+<span class="fc bfc" id="L45" title="All 4 branches covered.">		if(action.equalsIgnoreCase(&quot;saveUser&quot;) || action.equalsIgnoreCase(&quot;updateUserInDB&quot;))</span>
+		{
+<span class="fc bfc" id="L47" title="All 8 branches covered.">			if(!userNameError.equals(&quot;&quot;) || !userFirstNameError.equals(&quot;&quot;) || !userLastNameError.equals(&quot;&quot;)|| !userEmailError.equals(&quot;&quot;) </span>
+<span class="fc bfc" id="L48" title="All 8 branches covered.">			|| !userPasswordError.equals(&quot;&quot;) || !utaIDerror.equals(&quot;&quot;) || !phoneError.equals(&quot;&quot;) || !streetAddError.equals(&quot;&quot;)</span>
+<span class="fc bfc" id="L49" title="All 8 branches covered.">			|| !cityError.equals(&quot;&quot;) || !stateError.equals(&quot;&quot;) || !zipCodeError.equals(&quot;&quot;) || !vehicleNumberError.equals(&quot;&quot;))</span>
+			{
+<span class="fc" id="L51">				this.errorMsg = &quot;Please correct the following errors&quot;;</span>
+			}
+<span class="fc" id="L53">		}</span>
+				
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		else if(action.equals(&quot;loginUser&quot;)){</span>
+<span class="fc bfc" id="L56" title="All 4 branches covered.">			if(!userNameError.equals(&quot;&quot;) || !userPasswordError.equals(&quot;&quot;)){</span>
+<span class="fc" id="L57">				this.errorMsg=&quot;Please enter your details&quot;;</span>
+			}
+			
+<span class="fc" id="L60">		}</span>
+		
+		else{ //if(action.equals(&quot;searchUser&quot;))
+<span class="fc bfc" id="L63" title="All 2 branches covered.">			if(!searchError.equals(&quot;&quot;)){</span>
+<span class="fc" id="L64">				this.errorMsg=&quot;Please enter search details&quot;;</span>
+			}
+			
+		}
+		
+<span class="fc" id="L69">	}</span>
+
+	public String getUserNameError() {
+<span class="fc" id="L72">		return userNameError;</span>
+	}
+
+	public void setUserNameError(String userNameError) {
+<span class="fc" id="L76">		this.userNameError = userNameError;</span>
+<span class="fc" id="L77">	}</span>
+
+	public String getUserFirstNameError() {
+<span class="fc" id="L80">		return userFirstNameError;</span>
+	}
+
+	public void setUserFirstNameError(String userFirstNameError) {
+<span class="fc" id="L84">		this.userFirstNameError = userFirstNameError;</span>
+<span class="fc" id="L85">	}</span>
+
+	public String getUserLastNameError() {
+<span class="fc" id="L88">		return userLastNameError;</span>
+	}
+
+	public void setUserLastNameError(String userLastNameError) {
+<span class="fc" id="L92">		this.userLastNameError = userLastNameError;</span>
+<span class="fc" id="L93">	}</span>
+
+	public String getUserEmailError() {
+<span class="fc" id="L96">		return userEmailError;</span>
+	}
+
+	public void setUserEmailError(String userEmailError) {
+<span class="fc" id="L100">		this.userEmailError = userEmailError;</span>
+<span class="fc" id="L101">	}</span>
+
+	public String getUserPasswordError() {
+<span class="fc" id="L104">		return userPasswordError;</span>
+	}
+
+	public void setUserPasswordError(String userPasswordError) {
+<span class="fc" id="L108">		this.userPasswordError = userPasswordError;</span>
+<span class="fc" id="L109">	}</span>
+
+	public String getUtaIDerror() {
+<span class="fc" id="L112">		return utaIDerror;</span>
+	}
+
+	public void setUtaIDerror(String utaIDerror) {
+<span class="fc" id="L116">		this.utaIDerror = utaIDerror;</span>
+<span class="fc" id="L117">	}</span>
+
+	public String getPhoneError() {
+<span class="fc" id="L120">		return phoneError;</span>
+	}
+
+	public void setPhoneError(String phoneError) {
+<span class="fc" id="L124">		this.phoneError = phoneError;</span>
+<span class="fc" id="L125">	}</span>
+
+	public String getStreetAddError() {
+<span class="fc" id="L128">		return streetAddError;</span>
+	}
+
+	public void setStreetAddError(String streetAddError) {
+<span class="fc" id="L132">		this.streetAddError = streetAddError;</span>
+<span class="fc" id="L133">	}</span>
+
+	public String getCityError() {
+<span class="fc" id="L136">		return cityError;</span>
+	}
+
+	public void setCityError(String cityError) {
+<span class="fc" id="L140">		this.cityError = cityError;</span>
+<span class="fc" id="L141">	}</span>
+
+	public String getStateError() {
+<span class="fc" id="L144">		return stateError;</span>
+	}
+
+	public void setStateError(String stateError) {
+<span class="fc" id="L148">		this.stateError = stateError;</span>
+<span class="fc" id="L149">	}</span>
+
+	public String getZipCodeError() {
+<span class="fc" id="L152">		return zipCodeError;</span>
+	}
+
+	public void setZipCodeError(String zipCodeError) {
+<span class="fc" id="L156">		this.zipCodeError = zipCodeError;</span>
+<span class="fc" id="L157">	}</span>
+
+	public String getVehicleNumberError() {
+<span class="fc" id="L160">		return vehicleNumberError;</span>
+	}
+
+	public void setVehicleNumberError(String vehicleNumberError) {
+<span class="fc" id="L164">		this.vehicleNumberError = vehicleNumberError;</span>
+<span class="fc" id="L165">	}</span>
+	
+	public String getSearchError() {
+<span class="fc" id="L168">		return searchError;</span>
+	}
+
+	public void setSearchError(String searchError) {
+<span class="fc" id="L172">		this.searchError = searchError;</span>
+<span class="fc" id="L173">	}</span>
+	
+	
+	
+	
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Apr 30, 2019 2:10:14 AM)</div></body></html>

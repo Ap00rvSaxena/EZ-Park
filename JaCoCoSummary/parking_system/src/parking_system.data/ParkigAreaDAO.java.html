@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ParkigAreaDAO.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Apr 30, 2019 2:10:14 AM)</a> &gt; <a href="../../index.html" class="el_group">parking_system</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">parking_system.data</a> &gt; <span class="el_source">ParkigAreaDAO.java</span></div><h1>ParkigAreaDAO.java</h1><pre class="source lang-java linenums">package parking_system.data;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import parking_system.model.ParkingArea;
+import parking_system.model.User;
+import parking_system.util.SQLConnection;
+
+<span class="nc" id="L13">public class ParkigAreaDAO {</span>
+	
+<span class="fc" id="L15">static SQLConnection DBMgr = SQLConnection.getInstance();</span>
+public static final int MYSQL_DUPLICATE_PK = 1062;
+<span class="fc" id="L17">public static boolean isDuplicate = false;</span>
+	
+private static ArrayList&lt;ParkingArea&gt; ReturnMatchingParkingAreaList (String queryString) {
+	
+<span class="fc" id="L21">	ArrayList&lt;ParkingArea&gt; parkingAreaListInDB = new ArrayList&lt;ParkingArea&gt;();</span>
+
+<span class="fc" id="L23">	Statement stmt = null;</span>
+<span class="fc" id="L24">	Connection conn = SQLConnection.getDBConnection();  </span>
+
+
+	try {
+<span class="fc" id="L28">		stmt = conn.createStatement();</span>
+<span class="fc" id="L29">		ResultSet parkingAreaList = stmt.executeQuery(queryString);</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">		while (parkingAreaList.next()) {</span>
+<span class="fc" id="L31">			ParkingArea parkingArea = new ParkingArea(); </span>
+<span class="fc" id="L32">			parkingArea.setParking_area_name(parkingAreaList.getString(&quot;Parking_area_name&quot;));</span>
+<span class="fc" id="L33">			parkingArea.setType(parkingAreaList.getString(&quot;type&quot;));</span>
+<span class="fc" id="L34">			parkingArea.setfloor(parkingAreaList.getString(&quot;floor&quot;));</span>
+<span class="fc" id="L35">			parkingArea.setCapacity(parkingAreaList.getString(&quot;capacity&quot;));</span>
+<span class="fc" id="L36">			parkingArea.setReserved(parkingAreaList.getString(&quot;reserved&quot;));</span>
+<span class="fc" id="L37">			parkingArea.setAvailable(parkingAreaList.getString(&quot;available&quot;));</span>
+			//System.out.println(user.getCompany_name()+&quot; &quot;+company.getIdcompany());
+<span class="fc" id="L39">			parkingAreaListInDB.add(parkingArea);	</span>
+			
+		}
+<span class="fc" id="L42">		conn.close();</span>
+<span class="fc" id="L43">		stmt.close();</span>
+<span class="pc" id="L44">	} catch (SQLException e) {</span>
+	}
+<span class="fc" id="L46">	return parkingAreaListInDB;</span>
+}
+
+public static ParkingArea getParkingArea( ParkingArea park){
+	//User user = null;
+<span class="fc" id="L51">	ParkingArea parkingArea= null;</span>
+	
+<span class="fc" id="L53">	Statement  statement = null;</span>
+<span class="fc" id="L54">	Connection con = SQLConnection.getDBConnection();</span>
+	try {
+		
+<span class="fc" id="L57">		statement = con.createStatement();</span>
+<span class="fc" id="L58">		String getParkingArea = &quot;SELECT * FROM parking_details WHERE parking_area_name=&quot; + &quot;'&quot;+park.getParking_area_name()+&quot;'AND &quot;+ &quot;type=&quot; + &quot;'&quot;+park.getType()+&quot;'AND &quot;+</span>
+<span class="fc" id="L59">				&quot;floor=&quot; + &quot;'&quot;+park.getfloor()+&quot;'AND &quot;+&quot;capacity=&quot; + &quot;'&quot;+park.getCapacity()+&quot;'AND &quot;+&quot;available=&quot; + &quot;'&quot;+park.getAvailable()+&quot;';&quot;;</span>
+<span class="fc" id="L60">		System.out.println(park.getParking_area_name());</span>
+<span class="fc" id="L61">		System.out.println(getParkingArea);</span>
+<span class="fc" id="L62">		ResultSet result = statement.executeQuery(getParkingArea);</span>
+		
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		while(result.next()){</span>
+<span class="fc" id="L65">			parkingArea = new ParkingArea();</span>
+<span class="fc" id="L66">			parkingArea.setParking_area_name(result.getString(&quot;parking_area_name&quot;));</span>
+			
+<span class="fc" id="L68">			System.out.println(result.getString(&quot;parking_area_name&quot;));</span>
+			
+<span class="fc" id="L70">			parkingArea.setType(result.getString(&quot;type&quot;));</span>
+<span class="fc" id="L71">			parkingArea.setfloor(result.getString(&quot;floor&quot;));</span>
+			
+<span class="fc" id="L73">			parkingArea.setCapacity(result.getString(&quot;capacity&quot;));</span>
+			
+<span class="fc" id="L75">			parkingArea.setReserved(result.getString(&quot;reserved&quot;));</span>
+			
+<span class="fc" id="L77">			parkingArea.setAvailable(result.getString(&quot;available&quot;));</span>
+		
+			
+		}
+<span class="pc" id="L81">	} catch (SQLException e) {</span>
+	}
+<span class="fc" id="L83">	return parkingArea;</span>
+}
+
+public static void updateParkingAreaDetails(ParkingArea parkingArea){
+	
+	
+	
+	
+<span class="fc" id="L91">	String query = &quot;UPDATE Parking_details SET parking_area_name='&quot;+parkingArea.getParking_area_name()+&quot;', type='&quot;</span>
+<span class="fc" id="L92">					+parkingArea.getType()+&quot;',  floor='&quot;+parkingArea.getfloor()+&quot;', capacity='&quot;</span>
+<span class="fc" id="L93">					+parkingArea.getCapacity()+&quot;', reserved='&quot;+parkingArea.getReserved()+&quot;', available='&quot;</span>
+<span class="fc" id="L94">					+parkingArea.getAvailable()+&quot;'&quot;</span>
+<span class="fc" id="L95">					+&quot; WHERE parking_area_name=&quot; + &quot;'&quot;+parkingArea.getParking_area_name()+&quot;' AND &quot;+ &quot;type=&quot; + &quot;'&quot;+parkingArea.getType()+&quot;' AND &quot;+</span>
+<span class="fc" id="L96">					&quot;floor=&quot; + &quot;'&quot;+parkingArea.getfloor()+&quot;';&quot;;</span>
+	
+<span class="fc" id="L98">	Statement stmnt = null;</span>
+<span class="fc" id="L99">	Connection con =SQLConnection.getDBConnection();</span>
+<span class="fc" id="L100">	System.out.println(query);</span>
+	try {
+<span class="fc" id="L102">		stmnt=con.createStatement();</span>
+<span class="fc" id="L103">		stmnt.executeUpdate(query);</span>
+<span class="fc" id="L104">		con.commit();</span>
+<span class="fc" id="L105">		System.out.println(&quot;updated&quot;);</span>
+<span class="pc" id="L106">	} catch (SQLException e) {</span>
+	}
+<span class="fc" id="L108">}</span>
+
+
+
+
+private static void StoreListinDB (ParkingArea parkingArea,String queryString) {
+<span class="fc" id="L114">	String result = &quot;&quot;;</span>
+<span class="fc" id="L115">	Statement stmt = null;</span>
+<span class="fc" id="L116">	isDuplicate = false;</span>
+<span class="fc" id="L117">	Connection conn = SQLConnection.getDBConnection();  </span>
+
+	try {
+
+<span class="fc" id="L121">		stmt = conn.createStatement();</span>
+
+<span class="fc" id="L123">		String insertParkingArea = queryString + &quot; VALUES ('&quot;  </span>
+<span class="fc" id="L124">				+ parkingArea.getParking_area_name() + &quot;','&quot;</span>
+<span class="fc" id="L125">				+ parkingArea.getType() + &quot;','&quot;</span>
+<span class="fc" id="L126">				+ parkingArea.getfloor() + &quot;','&quot;</span>
+<span class="fc" id="L127">				+ parkingArea.getCapacity() + &quot;','&quot;</span>
+<span class="fc" id="L128">				+ '0'+ &quot;','&quot;</span>
+<span class="fc" id="L129">				+ parkingArea.getCapacity() + &quot;')&quot;</span>
+				;
+
+<span class="fc" id="L132">		System.out.println(insertParkingArea);</span>
+
+<span class="fc" id="L134">		stmt.executeUpdate(insertParkingArea);</span>
+
+<span class="fc" id="L136">		conn.commit(); </span>
+
+<span class="fc" id="L138">		System.out.println(&quot;Success: &quot; +insertParkingArea);</span>
+<span class="fc" id="L139">		conn.close();</span>
+<span class="fc" id="L140">		stmt.close();</span>
+<span class="pc" id="L141">	} catch (SQLException e) {</span>
+	}
+<span class="fc" id="L143">}</span>
+
+	public static void insertParkingArea(ParkingArea parkingArea) {  
+	
+<span class="fc" id="L147">		StoreListinDB(parkingArea,&quot;INSERT INTO PARKING_DETAILS (parking_area_name,type,floor,capacity,reserved,available) &quot;);</span>
+<span class="fc" id="L148">	}</span>
+	
+	public static ArrayList&lt;ParkingArea&gt;  searchParkingArea()  {  
+		
+<span class="fc" id="L152">		return ReturnMatchingParkingAreaList(&quot; SELECT * from parking_details&quot;);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Apr 30, 2019 2:10:14 AM)</div></body></html>

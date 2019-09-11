@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ParkingDao.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Apr 30, 2019 2:10:14 AM)</a> &gt; <a href="../../index.html" class="el_group">parking_system</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">parking_system.data</a> &gt; <span class="el_source">ParkingDao.java</span></div><h1>ParkingDao.java</h1><pre class="source lang-java linenums">package parking_system.data;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import parking_system.model.ParkingDetails;
+import parking_system.model.ParkingSpot;
+import parking_system.model.User;
+import parking_system.util.SQLConnection;
+
+<span class="nc" id="L14">public class ParkingDao {</span>
+	
+<span class="fc" id="L16">	static SQLConnection DBMgr = SQLConnection.getInstance();</span>
+
+	public static ArrayList&lt;ParkingSpot&gt; getAnyParking(String queryString){
+<span class="fc" id="L19">		ArrayList&lt;ParkingSpot&gt; parkingListInDB = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L20">		System.out.println(&quot;Search Parking Query: &quot; + queryString);</span>
+<span class="fc" id="L21">		Statement stmt = null;</span>
+<span class="fc" id="L22">		Connection conn = SQLConnection.getDBConnection();</span>
+<span class="fc" id="L23">		System.out.println(queryString);</span>
+	try {
+<span class="fc" id="L25">		stmt = conn.createStatement();</span>
+<span class="fc" id="L26">		ResultSet parkinglist = stmt.executeQuery(queryString);</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">		while (parkinglist.next()) { </span>
+<span class="fc" id="L28">			ParkingSpot parkingSpot = new ParkingSpot();</span>
+<span class="fc" id="L29">			parkingSpot.setParkingSpot(parkinglist.getString(&quot;Parking_Area_Name&quot;), parkinglist.getString(&quot;Parking_Type&quot;), Integer.parseInt(parkinglist.getString(&quot;Floors&quot;)), Integer.parseInt(parkinglist.getString(&quot;capacity&quot;)), Integer.parseInt(parkinglist.getString(&quot;available&quot;)));</span>
+<span class="fc" id="L30">			parkingListInDB.add(parkingSpot);</span>
+		}
+<span class="fc" id="L32">		conn.close();</span>
+<span class="fc" id="L33">		stmt.close();</span>
+<span class="pc" id="L34">	} catch (SQLException e) {</span>
+	}
+<span class="fc" id="L36">	return parkingListInDB;</span>
+	}
+	
+	public static ParkingSpot getParticularSpot(String spotid) {
+<span class="fc" id="L40">		ParkingSpot spotdetails = null;</span>
+<span class="fc" id="L41">		Statement stmt = null;</span>
+<span class="fc" id="L42">		Connection conn = SQLConnection.getDBConnection();</span>
+		
+<span class="fc" id="L44">		String query = &quot;SELECT * FROM PARKINGSPOT_DETAILS WHERE ParkingspotID = '&quot;+spotid+&quot;'&quot;;</span>
+<span class="fc" id="L45">		System.out.println(query);</span>
+		
+		try {
+<span class="fc" id="L48">			stmt = conn.createStatement();</span>
+<span class="fc" id="L49">			ResultSet pspot = stmt.executeQuery(query);</span>
+<span class="fc" id="L50">			System.out.println(&quot;In here: &quot; + pspot);</span>
+<span class="fc" id="L51">			spotdetails = new ParkingSpot();</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">			while (pspot.next()) { </span>
+<span class="fc" id="L53">				spotdetails.setParkingSpotFromDB(pspot.getString(&quot;ParkingspotID&quot;), pspot.getInt(&quot;Parkingspot&quot;), pspot.getString(&quot;Parking_Area_Name&quot;), pspot.getString(&quot;Parking_Type&quot;), pspot.getInt(&quot;Floors&quot;), pspot.getString(&quot;Availability&quot;), pspot.getInt(&quot;starttime&quot;), pspot.getInt(&quot;endtime&quot;), pspot.getString(&quot;reservationid&quot;));</span>
+			}
+<span class="fc" id="L55">			conn.close();</span>
+<span class="fc" id="L56">			stmt.close();</span>
+<span class="pc" id="L57">		} catch (SQLException e) {</span>
+		}		
+<span class="fc" id="L59">		return spotdetails;</span>
+}
+
+
+	public static void deactivateSpot(String spotid) {
+<span class="fc" id="L64">		Statement stmt = null;</span>
+<span class="fc" id="L65">		Connection conn = SQLConnection.getDBConnection();</span>
+<span class="fc" id="L66">		boolean flag = false;</span>
+<span class="fc" id="L67">		System.out.println(spotid);</span>
+<span class="fc" id="L68">		String unavailable = &quot;UNAVAILABLE&quot;;</span>
+<span class="fc" id="L69">		String query = &quot;UPDATE PARKINGSPOT_DETAILS SET Availability = '&quot;+unavailable+&quot;' WHERE ParkingspotID = '&quot;+ spotid+&quot;'&quot;;</span>
+<span class="fc" id="L70">		System.out.println(query);</span>
+		
+		try {
+<span class="fc" id="L73">			stmt = conn.createStatement();</span>
+<span class="fc" id="L74">			stmt.executeUpdate(query);</span>
+<span class="fc" id="L75">			conn.commit();</span>
+<span class="fc" id="L76">			conn.close();</span>
+<span class="fc" id="L77">			stmt.close();</span>
+<span class="fc" id="L78">			System.out.println(&quot;executed&quot;);</span>
+<span class="pc" id="L79">		} catch (SQLException e) {</span>
+		}	
+<span class="fc" id="L81">	}</span>
+	
+	public static ArrayList&lt;ParkingSpot&gt; getAvailableParking(String startTime, String endTime){
+<span class="fc" id="L84">		return getAnyParking(&quot;select Parking_Area_Name, Parking_Type, Floors, count(*) as capacity, count(CASE WHEN (Availability != 'UNAVAILABLE' AND (endtime &lt;=&quot;+ startTime +&quot; OR &quot;+ endTime +&quot; &lt;= starttime)) THEN 1 END) as available from parkingspot_details group by Parking_Area_Name,  Parking_Type, Floors&quot;);</span>
+		//SELECT * FROM PARKING_DETAILS WHERE available &gt; 0 
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Apr 30, 2019 2:10:14 AM)</div></body></html>

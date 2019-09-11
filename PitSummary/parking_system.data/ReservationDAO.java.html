@@ -1,0 +1,4242 @@
+<html>
+<head>
+<style type='text/css'>
+html, body, div, span, p, blockquote, pre {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	line-height: 1;
+	color: black;
+	background: white;
+	margin-left: 20px;
+}
+
+.src { 
+	border: 1px solid #dddddd;
+	padding-top: 10px;
+	padding-right: 5px;
+	padding-left: 5px;
+	font-family: Consolas, Courier, monospace;
+}
+
+
+.covered {background-color: #ddffdd}
+.uncovered {background-color: #ffdddd}
+.killed {background-color: #aaffaa}
+.survived {background-color: #ffaaaa}
+.uncertain {background-color: #dde7ef}
+.run_error {background-color: #dde7ef}
+.na {background-color: #eeeeee}
+.timed_out {background-color: #dde7ef}
+.non_viable {background-color: #aaffaa}
+.memory_error {background-color: #dde7ef}
+.not_started {background-color: #dde7ef; color : red}
+.no_coverage {background-color: #ffaaaa}
+
+
+.pop {outline:none; }
+.pop strong {line-height:30px;}
+.pop {text-decoration:none;}
+.pop span { z-index:10;display:none; padding:14px 20px; margin-top:-30px; margin-left:28px; width:800px; line-height:16px; word-wrap:break-word; }
+.pop:hover span{ display:inline; position:absolute; color:#111; border:1px solid #DCA; background:#fffAF0;}
+
+.pop span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -moz-box-shadow: 5px 5px 8px #CCC; -webkit-box-shadow: 5px 5px 8px #CCC; box-shadow: 5px 5px 8px #CCC; }
+</style>
+
+</head>
+<body>
+
+
+<h1>ReservationDAO.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_1'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package parking_system.data;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_2'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_3'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.sql.Connection;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_4'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.sql.ResultSet;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_5'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.sql.SQLException;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_6'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.sql.Statement;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_7'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.ArrayList;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_8'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import parking_system.model.Reservation;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_9'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import parking_system.model.User;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_10'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import parking_system.util.SQLConnection;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_11'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_12'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>public class ReservationDAO {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_13'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_14'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;static SQLConnection DBMgr = SQLConnection.getInstance();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_15'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_16'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;private static ArrayList&#60;Reservation&#62; ReturnMatchingReservationList (String queryString) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_17'/>
+17
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_17'>1</a>
+<span>
+
+1. ReturnMatchingReservationList : removed call to java/util/ArrayList::&#60;init&#62; &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;ArrayList&#60;Reservation&#62; reservationListInDB = new ArrayList&#60;&#62;();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_18'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_19'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;&#9;Statement stmt = null;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_20'/>
+20
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_20'>1</a>
+<span>
+
+1. ReturnMatchingReservationList : removed call to parking_system/util/SQLConnection::getDBConnection &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;Connection conn = SQLConnection.getDBConnection();  </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_21'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;try {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_22'/>
+22
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_22'>1</a>
+<span>
+
+1. ReturnMatchingReservationList : removed call to java/sql/Connection::createStatement &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;stmt = conn.createStatement();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_23'/>
+23
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_23'>1</a>
+<span>
+
+1. ReturnMatchingReservationList : removed call to java/sql/Statement::executeQuery &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;ResultSet reservationList = stmt.executeQuery(queryString);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_24'/>
+24
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_24'>4</a>
+<span>
+
+1. ReturnMatchingReservationList : negated conditional &rarr; NO_COVERAGE<br/>
+
+2. ReturnMatchingReservationList : removed call to java/sql/ResultSet::next &rarr; NO_COVERAGE<br/>
+
+3. ReturnMatchingReservationList : removed conditional - replaced equality check with false &rarr; NO_COVERAGE<br/>
+
+4. ReturnMatchingReservationList : removed conditional - replaced equality check with true &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;while (reservationList.next()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_25'/>
+25
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_25'>1</a>
+<span>
+
+1. ReturnMatchingReservationList : removed call to parking_system/model/Reservation::&#60;init&#62; &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;Reservation reservation = new Reservation();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_26'/>
+26
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_26'>35</a>
+<span>
+
+1. ReturnMatchingReservationList : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+2. ReturnMatchingReservationList : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+3. ReturnMatchingReservationList : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+4. ReturnMatchingReservationList : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+5. ReturnMatchingReservationList : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+6. ReturnMatchingReservationList : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+7. ReturnMatchingReservationList : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+8. ReturnMatchingReservationList : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+9. ReturnMatchingReservationList : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+10. ReturnMatchingReservationList : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+11. ReturnMatchingReservationList : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+12. ReturnMatchingReservationList : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+13. ReturnMatchingReservationList : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+14. ReturnMatchingReservationList : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+15. ReturnMatchingReservationList : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+16. ReturnMatchingReservationList : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+17. ReturnMatchingReservationList : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+18. ReturnMatchingReservationList : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+19. ReturnMatchingReservationList : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+20. ReturnMatchingReservationList : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+21. ReturnMatchingReservationList : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+22. ReturnMatchingReservationList : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+23. ReturnMatchingReservationList : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+24. ReturnMatchingReservationList : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+25. ReturnMatchingReservationList : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+26. ReturnMatchingReservationList : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+27. ReturnMatchingReservationList : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+28. ReturnMatchingReservationList : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+29. ReturnMatchingReservationList : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+30. ReturnMatchingReservationList : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+31. ReturnMatchingReservationList : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+32. ReturnMatchingReservationList : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+33. ReturnMatchingReservationList : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+34. ReturnMatchingReservationList : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+35. ReturnMatchingReservationList : removed call to parking_system/model/Reservation::setReservation &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;reservation.setReservation(reservationList.getString(&#34;username&#34;), reservationList.getString(&#34;reservationid&#34;), reservationList.getString(&#34;starttime&#34;), reservationList.getString(&#34;endtime&#34;), reservationList.getString(&#34;permit&#34;), reservationList.getString(&#34;parkingarea&#34;), reservationList.getString(&#34;floor&#34;), reservationList.getString(&#34;parkingspot&#34;), reservationList.getString(&#34;cancelled&#34;), reservationList.getString(&#34;resvdate&#34;), reservationList.getString(&#34;violation&#34;), reservationList.getString(&#34;vehiclenumber&#34;), reservationList.getString(&#34;cart&#34;), reservationList.getString(&#34;camera&#34;), reservationList.getString(&#34;history&#34;), reservationList.getString(&#34;payment&#34;), reservationList.getString(&#34;spotID&#34;));</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_27'/>
+27
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_27'>1</a>
+<span>
+
+1. ReturnMatchingReservationList : removed call to java/util/ArrayList::add &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;reservationListInDB.add(reservation);&#9;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_28'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_29'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;} catch (SQLException e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_30'/>
+30
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_30'>1</a>
+<span>
+
+1. ReturnMatchingReservationList : removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;e.printStackTrace();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_31'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;} finally {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_32'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;try {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_33'/>
+33
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_33'>3</a>
+<span>
+
+1. ReturnMatchingReservationList : removed call to java/sql/Connection::close &rarr; NO_COVERAGE<br/>
+
+2. ReturnMatchingReservationList : removed call to java/sql/Connection::close &rarr; NO_COVERAGE<br/>
+
+3. ReturnMatchingReservationList : removed call to java/sql/Connection::close &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;conn.close();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_34'/>
+34
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_34'>3</a>
+<span>
+
+1. ReturnMatchingReservationList : removed call to java/sql/Statement::close &rarr; NO_COVERAGE<br/>
+
+2. ReturnMatchingReservationList : removed call to java/sql/Statement::close &rarr; NO_COVERAGE<br/>
+
+3. ReturnMatchingReservationList : removed call to java/sql/Statement::close &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;stmt.close();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_35'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;&#9;} catch (SQLException e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_36'/>
+36
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_36'>3</a>
+<span>
+
+1. ReturnMatchingReservationList : removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE<br/>
+
+2. ReturnMatchingReservationList : removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE<br/>
+
+3. ReturnMatchingReservationList : removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;e.printStackTrace();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_37'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;};</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_38'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_39'/>
+39
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_39'>1</a>
+<span>
+
+1. ReturnMatchingReservationList : mutated return of Object value for parking_system/data/ReservationDAO::ReturnMatchingReservationList to ( if (x != null) null else throw new RuntimeException ) &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;return reservationListInDB;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_40'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_41'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_42'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;public static Reservation getReservationByID(String reservationID){</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_43'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;Reservation reservation = null;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_44'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_45'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;Statement  statement = null;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_46'/>
+46
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_46'>1</a>
+<span>
+
+1. getReservationByID : removed call to parking_system/util/SQLConnection::getDBConnection &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;Connection con = SQLConnection.getDBConnection();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_47'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;try {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_48'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_49'/>
+49
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_49'>1</a>
+<span>
+
+1. getReservationByID : removed call to java/sql/Connection::createStatement &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;statement = con.createStatement();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_50'/>
+50
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_50'>5</a>
+<span>
+
+1. getReservationByID : removed call to java/lang/StringBuilder::&#60;init&#62; &rarr; NO_COVERAGE<br/>
+
+2. getReservationByID : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+3. getReservationByID : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+4. getReservationByID : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+5. getReservationByID : removed call to java/lang/StringBuilder::toString &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;String getReservation = &#34;SELECT * FROM reservation WHERE reservationid=&#34; + &#34;&#39;&#34;+reservationID+&#34;&#39;&#34;+ &#34; ;&#34;;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_51'/>
+51
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_51'>1</a>
+<span>
+
+1. getReservationByID : removed call to java/io/PrintStream::println &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;System.out.println(reservationID);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_52'/>
+52
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_52'>1</a>
+<span>
+
+1. getReservationByID : removed call to java/io/PrintStream::println &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;System.out.println(getReservation);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_53'/>
+53
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_53'>1</a>
+<span>
+
+1. getReservationByID : removed call to java/sql/Statement::executeQuery &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;ResultSet result = statement.executeQuery(getReservation);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_54'/>
+54
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_54'>4</a>
+<span>
+
+1. getReservationByID : negated conditional &rarr; NO_COVERAGE<br/>
+
+2. getReservationByID : removed call to java/sql/ResultSet::next &rarr; NO_COVERAGE<br/>
+
+3. getReservationByID : removed conditional - replaced equality check with false &rarr; NO_COVERAGE<br/>
+
+4. getReservationByID : removed conditional - replaced equality check with true &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;while(result.next()){</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_55'/>
+55
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_55'>1</a>
+<span>
+
+1. getReservationByID : removed call to parking_system/model/Reservation::&#60;init&#62; &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;reservation = new Reservation();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_56'/>
+56
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_56'>35</a>
+<span>
+
+1. getReservationByID : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+2. getReservationByID : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+3. getReservationByID : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+4. getReservationByID : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+5. getReservationByID : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+6. getReservationByID : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+7. getReservationByID : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+8. getReservationByID : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+9. getReservationByID : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+10. getReservationByID : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+11. getReservationByID : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+12. getReservationByID : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+13. getReservationByID : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+14. getReservationByID : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+15. getReservationByID : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+16. getReservationByID : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+17. getReservationByID : replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE<br/>
+
+18. getReservationByID : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+19. getReservationByID : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+20. getReservationByID : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+21. getReservationByID : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+22. getReservationByID : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+23. getReservationByID : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+24. getReservationByID : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+25. getReservationByID : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+26. getReservationByID : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+27. getReservationByID : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+28. getReservationByID : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+29. getReservationByID : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+30. getReservationByID : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+31. getReservationByID : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+32. getReservationByID : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+33. getReservationByID : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+34. getReservationByID : removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE<br/>
+
+35. getReservationByID : removed call to parking_system/model/Reservation::setReservation &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;reservation.setReservation(result.getString(&#34;username&#34;), result.getString(&#34;reservationid&#34;), result.getString(&#34;starttime&#34;), result.getString(&#34;endtime&#34;), result.getString(&#34;permit&#34;), result.getString(&#34;parkingarea&#34;), result.getString(&#34;floor&#34;), result.getString(&#34;parkingspot&#34;), result.getString(&#34;cancelled&#34;), result.getString(&#34;resvdate&#34;), result.getString(&#34;violation&#34;), result.getString(&#34;vehiclenumber&#34;), result.getString(&#34;cart&#34;), result.getString(&#34;camera&#34;), result.getString(&#34;history&#34;), result.getString(&#34;payment&#34;), result.getString(&#34;spotID&#34;));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_57'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_58'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;} catch (SQLException e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_59'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;// TODO Auto-generated catch block</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_60'/>
+60
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_60'>1</a>
+<span>
+
+1. getReservationByID : removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;e.printStackTrace();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_61'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_62'/>
+62
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_62'>1</a>
+<span>
+
+1. getReservationByID : mutated return of Object value for parking_system/data/ReservationDAO::getReservationByID to ( if (x != null) null else throw new RuntimeException ) &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;return reservation;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_63'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_64'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_65'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;private static void updateReservationinDB(String query) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_66'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;Statement stmnt = null;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_67'/>
+67
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_67'>1</a>
+<span>
+
+1. updateReservationinDB : removed call to parking_system/util/SQLConnection::getDBConnection &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;Connection con =SQLConnection.getDBConnection();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_68'/>
+68
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_68'>1</a>
+<span>
+
+1. updateReservationinDB : removed call to java/io/PrintStream::println &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;System.out.println(query);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_69'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;try {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_70'/>
+70
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_70'>1</a>
+<span>
+
+1. updateReservationinDB : removed call to java/sql/Connection::createStatement &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;stmnt=con.createStatement();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_71'/>
+71
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_71'>1</a>
+<span>
+
+1. updateReservationinDB : removed call to java/sql/Statement::executeUpdate &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;stmnt.executeUpdate(query);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_72'/>
+72
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_72'>1</a>
+<span>
+
+1. updateReservationinDB : removed call to java/sql/Connection::commit &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;con.commit();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_73'/>
+73
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_73'>1</a>
+<span>
+
+1. updateReservationinDB : removed call to java/io/PrintStream::println &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;System.out.println(&#34;Start End Time updatedin ReservationSpot&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_74'/>
+74
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_74'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;} catch (SQLException e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_75'/>
+75
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_75'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;// TODO Auto-generated catch block</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_76'/>
+76
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_76'>1</a>
+<span>
+
+1. updateReservationinDB : removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;e.printStackTrace();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_77'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_78'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_79'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_80'/>
+80
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_80'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;public static void updateReservationDetails(Reservation reservation, String reservationID){</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_81'/>
+81
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_81'>5</a>
+<span>
+
+1. updateReservationDetails : removed call to java/lang/StringBuilder::&#60;init&#62; &rarr; NO_COVERAGE<br/>
+
+2. updateReservationDetails : removed call to parking_system/model/Reservation::getCancelled &rarr; NO_COVERAGE<br/>
+
+3. updateReservationDetails : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+4. updateReservationDetails : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+5. updateReservationDetails : removed call to java/lang/StringBuilder::toString &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;String query = &#34;UPDATE RESERVATION SET cancelled=&#39;&#34;+reservation.getCancelled()+&#34;&#39;, violation=&#39;&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_82'/>
+82
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_82'>5</a>
+<span>
+
+1. updateReservationDetails : removed call to parking_system/model/Reservation::getViolation &rarr; NO_COVERAGE<br/>
+
+2. updateReservationDetails : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+3. updateReservationDetails : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+4. updateReservationDetails : removed call to parking_system/model/Reservation::getVehiclenumber &rarr; NO_COVERAGE<br/>
+
+5. updateReservationDetails : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;&#9;+reservation.getViolation()+&#34;&#39;,  vehiclenumber=&#39;&#34;+reservation.getVehiclenumber()</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_83'/>
+83
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_83'>6</a>
+<span>
+
+1. updateReservationDetails : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+2. updateReservationDetails : removed call to parking_system/model/Reservation::getHistory &rarr; NO_COVERAGE<br/>
+
+3. updateReservationDetails : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+4. updateReservationDetails : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+5. updateReservationDetails : removed call to parking_system/model/Reservation::getCart &rarr; NO_COVERAGE<br/>
+
+6. updateReservationDetails : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;&#9;+&#34;&#39;, history=&#39;&#34;+reservation.getHistory()+&#34;&#39;, cart=&#39;&#34;+reservation.getCart()</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_84'/>
+84
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_84'>4</a>
+<span>
+
+1. updateReservationDetails : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+2. updateReservationDetails : removed call to parking_system/model/Reservation::getCamera &rarr; NO_COVERAGE<br/>
+
+3. updateReservationDetails : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+4. updateReservationDetails : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;&#9;+&#34;&#39;, camera=&#39;&#34;+reservation.getCamera()+&#34;&#39;&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_85'/>
+85
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_85'>3</a>
+<span>
+
+1. updateReservationDetails : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+2. updateReservationDetails : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+3. updateReservationDetails : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;&#9;+ &#34; WHERE reservationid=&#39;&#34;+reservationID+&#34;&#39;;&#34;;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_86'/>
+86
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_86'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_87'/>
+87
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_87'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;Statement stmnt = null;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_88'/>
+88
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_88'>1</a>
+<span>
+
+1. updateReservationDetails : removed call to parking_system/util/SQLConnection::getDBConnection &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;Connection con =SQLConnection.getDBConnection();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_89'/>
+89
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_89'>1</a>
+<span>
+
+1. updateReservationDetails : removed call to java/io/PrintStream::println &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;System.out.println(query);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_90'/>
+90
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_90'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;try {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_91'/>
+91
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_91'>1</a>
+<span>
+
+1. updateReservationDetails : removed call to java/sql/Connection::createStatement &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;stmnt=con.createStatement();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_92'/>
+92
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_92'>1</a>
+<span>
+
+1. updateReservationDetails : removed call to java/sql/Statement::executeUpdate &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;stmnt.executeUpdate(query);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_93'/>
+93
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_93'>1</a>
+<span>
+
+1. updateReservationDetails : removed call to java/sql/Connection::commit &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;con.commit();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_94'/>
+94
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_94'>1</a>
+<span>
+
+1. updateReservationDetails : removed call to java/io/PrintStream::println &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;System.out.println(&#34;updated&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_95'/>
+95
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_95'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;} catch (SQLException e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_96'/>
+96
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_96'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;// TODO Auto-generated catch block</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_97'/>
+97
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_97'>1</a>
+<span>
+
+1. updateReservationDetails : removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;e.printStackTrace();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_98'/>
+98
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_98'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_99'/>
+99
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_99'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_100'/>
+100
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_100'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_101'/>
+101
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_101'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;private static void StoreReservationinDB (Reservation reservation,String queryString) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_102'/>
+102
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_102'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;String result = &#34;&#34;;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_103'/>
+103
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_103'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;Statement stmt = null;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_104'/>
+104
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_104'>1</a>
+<span>
+
+1. StoreReservationinDB : removed call to parking_system/util/SQLConnection::getDBConnection &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;Connection conn = SQLConnection.getDBConnection();  </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_105'/>
+105
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_105'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;try {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_106'/>
+106
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_106'>1</a>
+<span>
+
+1. StoreReservationinDB : removed call to java/sql/Connection::createStatement &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;stmt = conn.createStatement();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_107'/>
+107
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_107'>4</a>
+<span>
+
+1. StoreReservationinDB : removed call to java/lang/StringBuilder::&#60;init&#62; &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/lang/String::valueOf &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+4. StoreReservationinDB : removed call to java/lang/StringBuilder::toString &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;String insertReservation = queryString + &#34; VALUES (&#39;&#34;  </span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_108'/>
+108
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_108'>3</a>
+<span>
+
+1. StoreReservationinDB : removed call to parking_system/model/Reservation::getReservationid &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;+ reservation.getReservationid() + &#34;&#39;,&#39;&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_109'/>
+109
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_109'>3</a>
+<span>
+
+1. StoreReservationinDB : removed call to parking_system/model/Reservation::getUsername &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;+ reservation.getUsername() + &#34;&#39;,&#39;&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_110'/>
+110
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_110'>3</a>
+<span>
+
+1. StoreReservationinDB : removed call to parking_system/model/Reservation::getSpotID &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;+ reservation.getSpotID() + &#34;&#39;,&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_111'/>
+111
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_111'>3</a>
+<span>
+
+1. StoreReservationinDB : removed call to parking_system/model/Reservation::getStarttime &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;+ reservation.getStarttime() + &#34;,&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_112'/>
+112
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_112'>3</a>
+<span>
+
+1. StoreReservationinDB : removed call to parking_system/model/Reservation::getEndtime &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;+ reservation.getEndtime() + &#34;,&#39;&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_113'/>
+113
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_113'>3</a>
+<span>
+
+1. StoreReservationinDB : removed call to parking_system/model/Reservation::getPermit &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;+ reservation.getPermit() + &#34;&#39;,&#39;&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_114'/>
+114
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_114'>3</a>
+<span>
+
+1. StoreReservationinDB : removed call to parking_system/model/Reservation::getParkingarea &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;+ reservation.getParkingarea() + &#34;&#39;,&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_115'/>
+115
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_115'>4</a>
+<span>
+
+1. StoreReservationinDB : removed call to parking_system/model/Reservation::getFloor &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/lang/Integer::parseInt &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+4. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;+ Integer.parseInt(reservation.getFloor()) + &#34;,&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_116'/>
+116
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_116'>4</a>
+<span>
+
+1. StoreReservationinDB : removed call to parking_system/model/Reservation::getParkingspot &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/lang/Integer::parseInt &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+4. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;+ Integer.parseInt(reservation.getParkingspot()) + &#34;,&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_117'/>
+117
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_117'>4</a>
+<span>
+
+1. StoreReservationinDB : removed call to parking_system/model/Reservation::getCancelled &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/lang/Integer::parseInt &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+4. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;+ Integer.parseInt(reservation.getCancelled()) + &#34;,&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_118'/>
+118
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_118'>2</a>
+<span>
+
+1. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;+ &#34; SYSDATE()&#34; + &#34;,&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_119'/>
+119
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_119'>3</a>
+<span>
+
+1. StoreReservationinDB : removed call to parking_system/model/Reservation::getViolation &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;+ reservation.getViolation() + &#34;,&#39;&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_120'/>
+120
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_120'>3</a>
+<span>
+
+1. StoreReservationinDB : removed call to parking_system/model/Reservation::getVehiclenumber &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;+ reservation.getVehiclenumber() + &#34;&#39;,&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_121'/>
+121
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_121'>4</a>
+<span>
+
+1. StoreReservationinDB : removed call to parking_system/model/Reservation::getHistory &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/lang/Integer::parseInt &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+4. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;+ Integer.parseInt(reservation.getHistory()) + &#34;,&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_122'/>
+122
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_122'>4</a>
+<span>
+
+1. StoreReservationinDB : removed call to parking_system/model/Reservation::getCart &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/lang/Integer::parseInt &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+4. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;+ Integer.parseInt(reservation.getCart()) + &#34;,&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_123'/>
+123
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_123'>4</a>
+<span>
+
+1. StoreReservationinDB : removed call to parking_system/model/Reservation::getCamera &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/lang/Integer::parseInt &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+4. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;+ Integer.parseInt(reservation.getCamera()) + &#34;,&#39;&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_124'/>
+124
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_124'>3</a>
+<span>
+
+1. StoreReservationinDB : removed call to parking_system/model/Reservation::getPayment &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;&#9;+ reservation.getPayment() + &#34;&#39;)&#34;;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_125'/>
+125
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_125'>1</a>
+<span>
+
+1. StoreReservationinDB : removed call to java/io/PrintStream::println &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;System.out.println(insertReservation);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_126'/>
+126
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_126'>1</a>
+<span>
+
+1. StoreReservationinDB : removed call to java/sql/Statement::executeUpdate &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;stmt.executeUpdate(insertReservation);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_127'/>
+127
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_127'>1</a>
+<span>
+
+1. StoreReservationinDB : removed call to java/sql/Connection::commit &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;conn.commit(); </span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_128'/>
+128
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_128'>4</a>
+<span>
+
+1. StoreReservationinDB : removed call to java/lang/StringBuilder::&#60;init&#62; &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/lang/StringBuilder::toString &rarr; NO_COVERAGE<br/>
+
+4. StoreReservationinDB : removed call to java/io/PrintStream::println &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;System.out.println(&#34;Success: &#34; +insertReservation);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_129'/>
+129
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_129'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;} catch (SQLException e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_130'/>
+130
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_130'>1</a>
+<span>
+
+1. StoreReservationinDB : removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;e.printStackTrace();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_131'/>
+131
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_131'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;} finally {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_132'/>
+132
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_132'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;try {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_133'/>
+133
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_133'>3</a>
+<span>
+
+1. StoreReservationinDB : removed call to java/sql/Connection::close &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/sql/Connection::close &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/sql/Connection::close &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;conn.close();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_134'/>
+134
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_134'>3</a>
+<span>
+
+1. StoreReservationinDB : removed call to java/sql/Statement::close &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/sql/Statement::close &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/sql/Statement::close &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;stmt.close();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_135'/>
+135
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_135'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;&#9;} catch (SQLException e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_136'/>
+136
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_136'>3</a>
+<span>
+
+1. StoreReservationinDB : removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE<br/>
+
+2. StoreReservationinDB : removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE<br/>
+
+3. StoreReservationinDB : removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;&#9;e.printStackTrace();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_137'/>
+137
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_137'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;&#9;}};</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_138'/>
+138
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_138'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_139'/>
+139
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_139'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_140'/>
+140
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_140'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;//Mansee</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_141'/>
+141
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_141'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;public static void deleteReservationByManager(String reservationID){</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_142'/>
+142
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_142'>4</a>
+<span>
+
+1. deleteReservationByManager : removed call to java/lang/StringBuilder::&#60;init&#62; &rarr; NO_COVERAGE<br/>
+
+2. deleteReservationByManager : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+3. deleteReservationByManager : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+4. deleteReservationByManager : removed call to java/lang/StringBuilder::toString &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;String query = &#34;DELETE FROM reservation WHERE reservationid=&#39;&#34;+reservationID+&#34;&#39;;&#34;;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_143'/>
+143
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_143'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;Statement smnt = null;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_144'/>
+144
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_144'>1</a>
+<span>
+
+1. deleteReservationByManager : removed call to parking_system/util/SQLConnection::getDBConnection &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;Connection conn = SQLConnection.getDBConnection();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_145'/>
+145
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_145'>1</a>
+<span>
+
+1. deleteReservationByManager : removed call to java/io/PrintStream::println &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;System.out.println(query);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_146'/>
+146
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_146'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;try {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_147'/>
+147
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_147'>1</a>
+<span>
+
+1. deleteReservationByManager : removed call to java/sql/Connection::createStatement &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;smnt = conn.createStatement();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_148'/>
+148
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_148'>1</a>
+<span>
+
+1. deleteReservationByManager : removed call to java/sql/Statement::executeUpdate &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;smnt.executeUpdate(query);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_149'/>
+149
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_149'>1</a>
+<span>
+
+1. deleteReservationByManager : removed call to java/sql/Connection::commit &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;conn.commit();</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_150'/>
+150
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_150'>1</a>
+<span>
+
+1. deleteReservationByManager : removed call to java/io/PrintStream::println &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;System.out.println(&#34;Deleted&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_151'/>
+151
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_151'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;&#9;} catch (SQLException e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_152'/>
+152
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_152'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;&#9;// TODO Auto-generated catch block</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_153'/>
+153
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_153'>1</a>
+<span>
+
+1. deleteReservationByManager : removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;&#9;e.printStackTrace();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_154'/>
+154
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_154'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;&#9;}&#9;</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_155'/>
+155
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_155'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_156'/>
+156
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_156'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_157'/>
+157
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_157'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;public static void insertReservation(Reservation reservation) {  </span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_158'/>
+158
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_158'>1</a>
+<span>
+
+1. insertReservation : removed call to parking_system/data/ReservationDAO::StoreReservationinDB &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;StoreReservationinDB(reservation,&#34;INSERT INTO RESERVATION (reservationid,username,spotID, starttime,endtime,permit,parkingarea,floor,parkingspot,cancelled,resvdate,violation,vehiclenumber,history,cart,camera,payment) &#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_159'/>
+159
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_159'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_160'/>
+160
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_160'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_161'/>
+161
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_161'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;public static ArrayList&#60;Reservation&#62;  searchReservationwithUsername(String username)  {  </span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_162'/>
+162
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_162'>6</a>
+<span>
+
+1. searchReservationwithUsername : removed call to java/lang/StringBuilder::&#60;init&#62; &rarr; NO_COVERAGE<br/>
+
+2. searchReservationwithUsername : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+3. searchReservationwithUsername : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+4. searchReservationwithUsername : removed call to java/lang/StringBuilder::toString &rarr; NO_COVERAGE<br/>
+
+5. searchReservationwithUsername : removed call to parking_system/data/ReservationDAO::ReturnMatchingReservationList &rarr; NO_COVERAGE<br/>
+
+6. searchReservationwithUsername : mutated return of Object value for parking_system/data/ReservationDAO::searchReservationwithUsername to ( if (x != null) null else throw new RuntimeException ) &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;return ReturnMatchingReservationList(&#34; SELECT * from reservation WHERE username = &#39;&#34;+username+&#34;&#39;&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_163'/>
+163
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_163'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_164'/>
+164
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_164'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_165'/>
+165
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_165'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;public static void updateReservationSpot(String spotID, String startTime, String endTime, String resvID) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_166'/>
+166
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_166'>11</a>
+<span>
+
+1. updateReservationSpot : removed call to java/lang/StringBuilder::&#60;init&#62; &rarr; NO_COVERAGE<br/>
+
+2. updateReservationSpot : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+3. updateReservationSpot : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+4. updateReservationSpot : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+5. updateReservationSpot : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+6. updateReservationSpot : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+7. updateReservationSpot : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+8. updateReservationSpot : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+9. updateReservationSpot : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+10. updateReservationSpot : removed call to java/lang/StringBuilder::toString &rarr; NO_COVERAGE<br/>
+
+11. updateReservationSpot : removed call to parking_system/data/ReservationDAO::updateReservationinDB &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;updateReservationinDB(&#34;UPDATE parkingspot_details SET Availability = &#39;BOOKED&#39;, starttime = &#34;+startTime+&#34;, endtime = &#34;+ endTime+&#34; , reservationid = &#39;&#34;+resvID+&#34;&#39; WHERE ParkingspotID = &#39;&#34;+ spotID+&#34;&#39;&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_167'/>
+167
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_167'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_168'/>
+168
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_168'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_169'/>
+169
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_169'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>&#9;public static void updateReservationSpotwithResID(String selectedReservationID) {</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_170'/>
+170
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_170'>5</a>
+<span>
+
+1. updateReservationSpotwithResID : removed call to java/lang/StringBuilder::&#60;init&#62; &rarr; NO_COVERAGE<br/>
+
+2. updateReservationSpotwithResID : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+3. updateReservationSpotwithResID : removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE<br/>
+
+4. updateReservationSpotwithResID : removed call to java/lang/StringBuilder::toString &rarr; NO_COVERAGE<br/>
+
+5. updateReservationSpotwithResID : removed call to parking_system/data/ReservationDAO::updateReservationinDB &rarr; NO_COVERAGE<br/>
+
+</span>
+</td>
+<td class='uncovered'><pre><span  class='survived'>&#9;&#9;updateReservationinDB(&#34;UPDATE parkingspot_details SET Availability = &#39;AVAILABLE&#39;, starttime = &#34;+0+&#34;, endtime = &#34;+ 0+&#34; , reservationid = &#39;NULL&#39; WHERE reservationid = &#39;&#34;+ selectedReservationID+&#34;&#39;&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_171'/>
+171
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_171'></a>
+<span>
+</span>
+</td>
+<td class='uncovered'><pre><span  class=''>&#9;}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@401788d5_172'/>
+172
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_172'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_17'>17</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_17'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/util/ArrayList::&#60;init&#62; &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_20'>20</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_20'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to parking_system/util/SQLConnection::getDBConnection &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_22'>22</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_22'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Connection::createStatement &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_23'>23</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_23'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Statement::executeQuery &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_24'>24</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_24'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::next &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_25'>25</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_25'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::&#60;init&#62; &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_26'>26</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_26'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>6.<span><b>6</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>7.<span><b>7</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>8.<span><b>8</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>9.<span><b>9</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>10.<span><b>10</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>11.<span><b>11</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>12.<span><b>12</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>13.<span><b>13</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>14.<span><b>14</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>15.<span><b>15</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>16.<span><b>16</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>17.<span><b>17</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>18.<span><b>18</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>19.<span><b>19</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>20.<span><b>20</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>21.<span><b>21</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>22.<span><b>22</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>23.<span><b>23</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>24.<span><b>24</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>25.<span><b>25</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>26.<span><b>26</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>27.<span><b>27</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>28.<span><b>28</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>29.<span><b>29</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>30.<span><b>30</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>31.<span><b>31</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>32.<span><b>32</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>33.<span><b>33</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>34.<span><b>34</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>35.<span><b>35</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::setReservation &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_27'>27</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_27'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/util/ArrayList::add &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_30'>30</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_30'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_33'>33</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_33'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Connection::close &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Connection::close &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Connection::close &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_34'>34</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_34'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Statement::close &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Statement::close &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Statement::close &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_36'>36</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_36'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_39'>39</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_39'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>ReturnMatchingReservationList<br/><b>Killed by : </b>none</span></span> mutated return of Object value for parking_system/data/ReservationDAO::ReturnMatchingReservationList to ( if (x != null) null else throw new RuntimeException ) &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_46'>46</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_46'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to parking_system/util/SQLConnection::getDBConnection &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_49'>49</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_49'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Connection::createStatement &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_50'>50</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_50'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::&#60;init&#62; &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::toString &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_51'>51</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_51'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/io/PrintStream::println &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_52'>52</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_52'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/io/PrintStream::println &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_53'>53</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_53'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Statement::executeQuery &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_54'>54</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_54'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> negated conditional &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::next &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with false &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed conditional - replaced equality check with true &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_55'>55</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_55'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::&#60;init&#62; &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_56'>56</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_56'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>6.<span><b>6</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>7.<span><b>7</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>8.<span><b>8</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>9.<span><b>9</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>10.<span><b>10</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>11.<span><b>11</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>12.<span><b>12</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>13.<span><b>13</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>14.<span><b>14</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>15.<span><b>15</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>16.<span><b>16</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>17.<span><b>17</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> replaced call to java/sql/ResultSet::getString with argument &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>18.<span><b>18</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>19.<span><b>19</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>20.<span><b>20</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>21.<span><b>21</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>22.<span><b>22</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>23.<span><b>23</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>24.<span><b>24</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>25.<span><b>25</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>26.<span><b>26</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>27.<span><b>27</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>28.<span><b>28</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>29.<span><b>29</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>30.<span><b>30</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>31.<span><b>31</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>32.<span><b>32</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>33.<span><b>33</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>34.<span><b>34</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/ResultSet::getString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>35.<span><b>35</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::setReservation &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_60'>60</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_60'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_62'>62</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_62'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getReservationByID<br/><b>Killed by : </b>none</span></span> mutated return of Object value for parking_system/data/ReservationDAO::getReservationByID to ( if (x != null) null else throw new RuntimeException ) &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_67'>67</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_67'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to parking_system/util/SQLConnection::getDBConnection &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_68'>68</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_68'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/io/PrintStream::println &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_70'>70</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_70'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Connection::createStatement &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_71'>71</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_71'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Statement::executeUpdate &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_72'>72</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_72'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Connection::commit &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_73'>73</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_73'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/io/PrintStream::println &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_76'>76</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_76'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_81'>81</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_81'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::&#60;init&#62; &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getCancelled &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::toString &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_82'>82</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_82'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getViolation &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getVehiclenumber &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_83'>83</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_83'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getHistory &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getCart &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>6.<span><b>6</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_84'>84</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_84'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getCamera &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_85'>85</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_85'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_88'>88</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_88'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to parking_system/util/SQLConnection::getDBConnection &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_89'>89</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_89'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/io/PrintStream::println &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_91'>91</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_91'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Connection::createStatement &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_92'>92</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_92'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Statement::executeUpdate &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_93'>93</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_93'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Connection::commit &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_94'>94</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_94'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/io/PrintStream::println &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_97'>97</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_97'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationDetails<br/><b>Killed by : </b>none</span></span> removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_104'>104</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_104'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to parking_system/util/SQLConnection::getDBConnection &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_106'>106</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_106'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Connection::createStatement &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_107'>107</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_107'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::&#60;init&#62; &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/String::valueOf &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::toString &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_108'>108</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_108'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getReservationid &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_109'>109</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_109'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getUsername &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_110'>110</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_110'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getSpotID &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_111'>111</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_111'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getStarttime &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_112'>112</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_112'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getEndtime &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_113'>113</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_113'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getPermit &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_114'>114</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_114'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getParkingarea &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_115'>115</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_115'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getFloor &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/Integer::parseInt &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_116'>116</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_116'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getParkingspot &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/Integer::parseInt &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_117'>117</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_117'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getCancelled &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/Integer::parseInt &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_118'>118</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_118'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_119'>119</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_119'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getViolation &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_120'>120</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_120'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getVehiclenumber &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_121'>121</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_121'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getHistory &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/Integer::parseInt &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_122'>122</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_122'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getCart &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/Integer::parseInt &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_123'>123</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_123'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getCamera &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/Integer::parseInt &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_124'>124</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_124'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to parking_system/model/Reservation::getPayment &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_125'>125</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_125'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/io/PrintStream::println &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_126'>126</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_126'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Statement::executeUpdate &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_127'>127</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_127'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Connection::commit &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_128'>128</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_128'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::&#60;init&#62; &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::toString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/io/PrintStream::println &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_130'>130</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_130'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_133'>133</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_133'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Connection::close &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Connection::close &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Connection::close &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_134'>134</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_134'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Statement::close &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Statement::close &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Statement::close &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_136'>136</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_136'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>StoreReservationinDB<br/><b>Killed by : </b>none</span></span> removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_142'>142</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_142'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>deleteReservationByManager<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::&#60;init&#62; &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>deleteReservationByManager<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>deleteReservationByManager<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>deleteReservationByManager<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::toString &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_144'>144</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_144'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>deleteReservationByManager<br/><b>Killed by : </b>none</span></span> removed call to parking_system/util/SQLConnection::getDBConnection &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_145'>145</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_145'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>deleteReservationByManager<br/><b>Killed by : </b>none</span></span> removed call to java/io/PrintStream::println &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_147'>147</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_147'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>deleteReservationByManager<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Connection::createStatement &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_148'>148</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_148'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>deleteReservationByManager<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Statement::executeUpdate &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_149'>149</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_149'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>deleteReservationByManager<br/><b>Killed by : </b>none</span></span> removed call to java/sql/Connection::commit &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_150'>150</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_150'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>deleteReservationByManager<br/><b>Killed by : </b>none</span></span> removed call to java/io/PrintStream::println &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_153'>153</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_153'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>deleteReservationByManager<br/><b>Killed by : </b>none</span></span> removed call to java/sql/SQLException::printStackTrace &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_158'>158</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_158'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>insertReservation<br/><b>Killed by : </b>none</span></span> removed call to parking_system/data/ReservationDAO::StoreReservationinDB &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_162'>162</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_162'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>searchReservationwithUsername<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::&#60;init&#62; &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>searchReservationwithUsername<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>searchReservationwithUsername<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>searchReservationwithUsername<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::toString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>searchReservationwithUsername<br/><b>Killed by : </b>none</span></span> removed call to parking_system/data/ReservationDAO::ReturnMatchingReservationList &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>6.<span><b>6</b><br/><b>Location : </b>searchReservationwithUsername<br/><b>Killed by : </b>none</span></span> mutated return of Object value for parking_system/data/ReservationDAO::searchReservationwithUsername to ( if (x != null) null else throw new RuntimeException ) &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_166'>166</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_166'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationSpot<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::&#60;init&#62; &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>updateReservationSpot<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>updateReservationSpot<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>updateReservationSpot<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>updateReservationSpot<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>6.<span><b>6</b><br/><b>Location : </b>updateReservationSpot<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>7.<span><b>7</b><br/><b>Location : </b>updateReservationSpot<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>8.<span><b>8</b><br/><b>Location : </b>updateReservationSpot<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>9.<span><b>9</b><br/><b>Location : </b>updateReservationSpot<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>10.<span><b>10</b><br/><b>Location : </b>updateReservationSpot<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::toString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>11.<span><b>11</b><br/><b>Location : </b>updateReservationSpot<br/><b>Killed by : </b>none</span></span> removed call to parking_system/data/ReservationDAO::updateReservationinDB &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@401788d5_170'>170</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@401788d5_170'/> 
+
+<p class='NO_COVERAGE'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>updateReservationSpotwithResID<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::&#60;init&#62; &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>updateReservationSpotwithResID<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>updateReservationSpotwithResID<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::append &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>updateReservationSpotwithResID<br/><b>Killed by : </b>none</span></span> removed call to java/lang/StringBuilder::toString &rarr; NO_COVERAGE</p> <p class='NO_COVERAGE'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>updateReservationSpotwithResID<br/><b>Killed by : </b>none</span></span> removed call to parking_system/data/ReservationDAO::updateReservationinDB &rarr; NO_COVERAGE</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_61</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_60</li>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_56</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_55</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_58</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_57</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_52</li>
+
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_51</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_54</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_53</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_59</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_50</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_45</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_44</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_47</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_46</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_41</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_40</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_43</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_42</li>
+
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_49</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_48</li>
+
+<li class='mutator'>INLINE_CONSTANT_MUTATOR</li>
+
+<li class='mutator'>CONSTRUCTOR_CALL_MUTATOR</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_34</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_33</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_36</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_35</li>
+
+<li class='mutator'>EXPERIMENTAL_MEMBER_VARIABLE_MUTATOR</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_30</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_32</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_31</li>
+
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_ELSE_MUTATOR</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_38</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_37</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_39</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_3</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_2</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_1</li>
+
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_0</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_23</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_22</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_25</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_9</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_24</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_8</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_7</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_6</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_21</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_5</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_20</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_4</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_27</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_26</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_29</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_28</li>
+
+<li class='mutator'>REMOVE_INCREMENTS_MUTATOR</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_12</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_11</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_99</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_14</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_13</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_96</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_95</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_10</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_98</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_97</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_19</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_16</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_15</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_18</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_17</li>
+
+<li class='mutator'>EXPERIMENTAL_SWITCH_MUTATOR</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_92</li>
+
+<li class='mutator'>ARGUMENT_PROPAGATION_MUTATOR</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_91</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_94</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_93</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_90</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_89</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_88</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_85</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_84</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_87</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_86</li>
+
+<li class='mutator'>MATH_MUTATOR</li>
+
+<li class='mutator'>NON_VOID_METHOD_CALL_MUTATOR</li>
+
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_IF_MUTATOR</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_81</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_80</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_83</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_82</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_78</li>
+
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_ELSE_MUTATOR</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_77</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_79</li>
+
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_74</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_73</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_76</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_75</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_70</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_72</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_71</li>
+
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_IF_MUTATOR</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_67</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_66</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_69</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_68</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_63</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_62</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_65</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_64</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.1.9
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ParkingArea.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Apr 30, 2019 2:10:14 AM)</a> &gt; <a href="../../index.html" class="el_group">parking_system</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">parking_system.model</a> &gt; <span class="el_source">ParkingArea.java</span></div><h1>ParkingArea.java</h1><pre class="source lang-java linenums">package parking_system.model;
+
+<span class="fc" id="L3">public class ParkingArea {</span>
+
+	private static final long serialVersionUID = 3L;
+	private String parking_area_name;
+	private String type;
+	private String floor;
+	private String capacity;
+	private String reserved;
+	private String available;
+	
+	public String getReserved() {
+<span class="fc" id="L14">		return reserved;</span>
+	}
+
+	public void setReserved(String reserved) {
+<span class="fc" id="L18">		this.reserved = reserved;</span>
+<span class="fc" id="L19">	}</span>
+
+	public String getAvailable() {
+<span class="fc" id="L22">		return available;</span>
+	}
+
+	public void setAvailable(String available) {
+<span class="fc" id="L26">		this.available = available;</span>
+<span class="fc" id="L27">	}</span>
+		
+	/*private String search = &quot;&quot;;	
+	
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+*/
+	public String getParking_area_name() {
+<span class="fc" id="L40">		return parking_area_name;</span>
+	}
+
+	public void setParking_area_name(String parking_area_name) {
+<span class="fc" id="L44">		this.parking_area_name = parking_area_name;</span>
+<span class="fc" id="L45">	}</span>
+
+	public String getType() {
+<span class="fc" id="L48">		return type;</span>
+	}
+
+	public void setType(String type) {
+<span class="fc" id="L52">		this.type = type;</span>
+<span class="fc" id="L53">	}</span>
+	
+	public String getfloor() {
+<span class="fc" id="L56">		return floor;</span>
+	}
+
+	public void setfloor(String floor) {
+<span class="fc" id="L60">		this.floor = floor;</span>
+<span class="fc" id="L61">	}</span>
+
+	public String getCapacity() {
+<span class="fc" id="L64">		return capacity;</span>
+	}
+
+	public void setCapacity(String capacity) {
+<span class="fc" id="L68">		this.capacity = capacity;</span>
+<span class="fc" id="L69">	}</span>
+	
+	public void setParkingArea(String parking_area_name, String type, String floor, String capacity,String reserved,String available) {
+<span class="fc" id="L72">		setParking_area_name(parking_area_name);</span>
+<span class="fc" id="L73">		setType(type);</span>
+<span class="fc" id="L74">		setfloor(floor);</span>
+<span class="fc" id="L75">		setCapacity(capacity);</span>
+<span class="fc" id="L76">		setReserved(reserved);</span>
+<span class="fc" id="L77">		setAvailable(available);</span>
+<span class="fc" id="L78">	}</span>
+	
+	
+	public void  validateParkingArea(String action, ParkingArea parkingArea, ParkingAreaErrorMsgs errorMsg){			
+<span class="fc" id="L82">			errorMsg.setParkingAreaNameError(validateParkingAreaName(action, parkingArea.getParking_area_name()));</span>
+<span class="fc" id="L83">			errorMsg.setFloorError(validateFloor(action, parkingArea.getfloor()));</span>
+<span class="fc" id="L84">			errorMsg.setCapacityError(validateCapacity(action, parkingArea.getCapacity()));</span>
+<span class="fc" id="L85">			errorMsg.setReservedErro(validateReserved(action, parkingArea.getReserved()));</span>
+<span class="fc" id="L86">			errorMsg.setAvailableError(validateAvailable(action, parkingArea.getAvailable()));</span>
+<span class="fc" id="L87">			errorMsg.setErrorMsg(action);		</span>
+<span class="fc" id="L88">		}</span>
+	
+	private String validateParkingAreaName(String action, String name){
+<span class="fc" id="L91">		String msg=&quot;&quot;;</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">			if(name.equals(&quot;&quot;)){</span>
+<span class="fc" id="L93">				msg=&quot;Please provide ParkingArea Name&quot;;</span>
+				
+<span class="fc" id="L95">			}</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">			else if(name.length()&lt;3){</span>
+<span class="fc" id="L97">				msg=&quot;ParkingArea name should be at least 3 letter long&quot;;</span>
+			}
+<span class="fc" id="L99">		return msg;</span>
+	}
+
+	private String validateFloor(String action, String floor){
+<span class="fc" id="L103">		String msg=&quot;&quot;;</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">			if(floor.equals(&quot;&quot;)){</span>
+<span class="fc" id="L105">				msg=&quot;Please provide Floor&quot;;	</span>
+<span class="fc" id="L106">			}		</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">			else if (!isTextAnInteger(floor)){</span>
+<span class="fc" id="L108">				msg = &quot;Floor can not be Alphabet&quot;;</span>
+			}
+<span class="fc" id="L110">		return msg;</span>
+	}
+
+	private String validateCapacity(String action, String capacity){
+<span class="fc" id="L114">		String msg=&quot;&quot;;</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if(capacity.equals(&quot;&quot;)){</span>
+<span class="fc" id="L116">			msg=&quot;Please provide Capacity&quot;;	</span>
+<span class="fc" id="L117">		}		</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		else if (!isTextAnInteger(capacity)){</span>
+<span class="fc" id="L119">			msg = &quot;Capacity can not be Alphabet&quot;;</span>
+		}
+<span class="fc" id="L121">		return msg;</span>
+	}
+	
+	private String validateReserved(String action, String reserved){
+<span class="fc" id="L125">		String msg=&quot;&quot;;</span>
+		
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		if(action.equalsIgnoreCase(&quot;updateParkingAreaInDB&quot;)){</span>
+			
+<span class="fc bfc" id="L129" title="All 2 branches covered.">			if(reserved.equals(&quot;&quot;)){</span>
+<span class="fc" id="L130">				msg=&quot;Please provide Reserved&quot;;	</span>
+<span class="fc" id="L131">			}		</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">			else if (!isTextAnInteger(reserved)){</span>
+<span class="fc" id="L133">				msg = &quot;Reserved can not be Alphabet&quot;;</span>
+			}
+			 			
+		}
+		
+<span class="fc" id="L138">		return msg;</span>
+	}
+	
+	private String validateAvailable(String action, String available){
+<span class="fc" id="L142">		String msg=&quot;&quot;;</span>
+		
+<span class="fc bfc" id="L144" title="All 2 branches covered.">		if(action.equalsIgnoreCase(&quot;updateParkingAreaInDB&quot;)){</span>
+			
+<span class="fc bfc" id="L146" title="All 2 branches covered.">			if(available.equals(&quot;&quot;)){</span>
+<span class="fc" id="L147">				msg=&quot;Please provide Available&quot;;	</span>
+<span class="fc" id="L148">			}		</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">			else if (!isTextAnInteger(available)){</span>
+<span class="fc" id="L150">				msg = &quot;Available can not be Alphabet&quot;;</span>
+			}
+
+		}
+		
+<span class="fc" id="L155">		return msg;</span>
+	}
+	
+	private boolean isTextAnInteger (String string) {
+        boolean result;
+		try
+        {
+<span class="fc" id="L162">            Long.parseLong(string);</span>
+<span class="fc" id="L163">            result=true;</span>
+<span class="fc" id="L164">        } </span>
+<span class="fc" id="L165">        catch (NumberFormatException e) </span>
+        {
+<span class="fc" id="L167">            result=false;</span>
+        }
+<span class="fc" id="L169">		return result;</span>
+	}	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Apr 30, 2019 2:10:14 AM)</div></body></html>

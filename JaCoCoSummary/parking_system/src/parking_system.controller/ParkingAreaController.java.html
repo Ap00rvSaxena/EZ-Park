@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ParkingAreaController.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Apr 30, 2019 2:10:14 AM)</a> &gt; <a href="../../index.html" class="el_group">parking_system</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">parking_system.controller</a> &gt; <span class="el_source">ParkingAreaController.java</span></div><h1>ParkingAreaController.java</h1><pre class="source lang-java linenums">package parking_system.controller;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import parking_system.data.ParkigAreaDAO;
+import parking_system.model.ParkingArea;
+import parking_system.model.ParkingAreaErrorMsgs;
+/**
+ * Servlet implementation class ParkingAreaController
+ */
+@WebServlet(&quot;/ParkingAreaController&quot;)
+<span class="fc" id="L20">public class ParkingAreaController extends HttpServlet {</span>
+private static final long serialVersionUID = 1L;
+
+<span class="fc" id="L23">String parkingareaname=null;</span>
+
+
+
+    
+	private void getParkinAreaParam (HttpServletRequest request, ParkingArea parkingArea) {
+<span class="fc" id="L29">		parkingArea.setParkingArea(request.getParameter(&quot;parking_area_name&quot;),request.getParameter(&quot;type&quot;),request.getParameter(&quot;floor&quot;),request.getParameter(&quot;capacity&quot;),request.getParameter(&quot;reserved&quot;),request.getParameter(&quot;available&quot;));</span>
+<span class="fc" id="L30">	}</span>
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+<span class="fc" id="L33">		doPost(request, response);</span>
+<span class="fc" id="L34">	}</span>
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+<span class="fc" id="L38">		String action = request.getParameter(&quot;action&quot;), url=&quot;&quot;;</span>
+<span class="fc" id="L39">		HttpSession session = request.getSession();</span>
+	
+<span class="fc" id="L41">		ParkingArea parkingArea=new ParkingArea();</span>
+<span class="fc" id="L42">		ParkingArea parkingArea2=new ParkingArea();</span>
+<span class="fc" id="L43">		ParkingAreaErrorMsgs parkingAreaErrorMsgs= new ParkingAreaErrorMsgs();</span>
+		
+<span class="fc bfc" id="L45" title="All 2 branches covered.">		if (action.equalsIgnoreCase(&quot;saveParkingArea&quot;) ) { </span>
+<span class="fc" id="L46">			System.out.println(&quot;Here: &quot; + parkingAreaErrorMsgs.getParkingAreaNameError() );</span>
+<span class="fc" id="L47">			getParkinAreaParam(request, parkingArea);</span>
+<span class="fc" id="L48">			parkingArea.validateParkingArea(action, parkingArea, parkingAreaErrorMsgs);</span>
+<span class="fc" id="L49">			session.setAttribute(&quot;parkingArea&quot;, parkingArea);</span>
+			
+<span class="fc bfc" id="L51" title="All 2 branches covered.">			if(!parkingAreaErrorMsgs.getErrorMsg().equals(&quot;&quot;)){</span>
+<span class="fc" id="L52">				getParkinAreaParam(request, parkingArea);</span>
+<span class="fc" id="L53">				session.setAttribute(&quot;errorMsgs&quot;, parkingAreaErrorMsgs);</span>
+<span class="fc" id="L54">				url=&quot;/addParkingArea.jsp&quot;;</span>
+<span class="fc" id="L55">			}</span>
+			else{
+<span class="fc" id="L57">				ParkigAreaDAO.insertParkingArea(parkingArea);		</span>
+<span class="fc" id="L58">				url=&quot;/listManager.jsp&quot;;</span>
+			}
+
+
+<span class="fc" id="L62">		}</span>
+
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		else if (action.equalsIgnoreCase(&quot;searchParkingArea&quot;) ) {</span>
+<span class="fc" id="L65">			ArrayList&lt;ParkingArea&gt; parkingAreaInDB = new ArrayList&lt;ParkingArea&gt;();</span>
+<span class="fc" id="L66">			parkingAreaInDB=ParkigAreaDAO.searchParkingArea();</span>
+<span class="fc" id="L67">			session.setAttribute(&quot;ParkingArea&quot;, parkingAreaInDB);</span>
+<span class="fc" id="L68">			session.setAttribute(&quot;searchMsg&quot;, parkingAreaInDB.size() + &quot; Search Results Found!&quot;);</span>
+<span class="fc" id="L69">			System.out.println(parkingAreaInDB.size());</span>
+<span class="fc" id="L70">			url=&quot;/SearchParkingAreaList.jsp&quot;;</span>
+<span class="fc" id="L71">		}</span>
+
+		
+		
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		else if(action.equalsIgnoreCase(&quot;EditParkingArea&quot;)){</span>
+			
+<span class="fc" id="L77">			System.out.println(&quot;update: &quot;);</span>
+			
+<span class="fc" id="L79">			String radioBut = request.getParameter(&quot;select&quot;);</span>
+<span class="fc" id="L80">			String parking[] = radioBut.split(&quot;,&quot;);</span>
+			
+<span class="fc" id="L82">			session.setAttribute(&quot;parking_area_name&quot;, parking[0]);</span>
+<span class="fc" id="L83">			session.setAttribute(&quot;type&quot;, parking[1]);</span>
+<span class="fc" id="L84">			session.setAttribute(&quot;floor&quot;, parking[2].toString());</span>
+<span class="fc" id="L85">			session.setAttribute(&quot;capacity&quot;, parking[3].toString());</span>
+<span class="fc" id="L86">			session.setAttribute(&quot;available&quot;, parking[4].toString());</span>
+			
+<span class="fc" id="L88">			ParkingArea park = new ParkingArea();</span>
+			
+<span class="fc" id="L90">			park.setParking_area_name(parking[0]);</span>
+<span class="fc" id="L91">			park.setType(parking[1]);</span>
+<span class="fc" id="L92">			park.setfloor(parking[2].toString());</span>
+<span class="fc" id="L93">			park.setCapacity(parking[3].toString());</span>
+<span class="fc" id="L94">			park.setAvailable(parking[4].toString());</span>
+<span class="fc" id="L95">			System.out.println(&quot;update: &quot;);</span>
+			
+<span class="fc" id="L97">			ParkingArea updateParkingArea = new ParkingArea();</span>
+				
+<span class="fc" id="L99">			updateParkingArea = ParkigAreaDAO.getParkingArea(park); </span>
+<span class="fc" id="L100">					session.setAttribute(&quot;UPDATEParkingArea&quot;, updateParkingArea);</span>
+			//		if (userRole.equalsIgnoreCase(&quot;manager&quot;))
+<span class="fc" id="L102">						url = &quot;/updateParkingArea.jsp&quot;;	</span>
+				//}
+
+
+<span class="fc" id="L106">			}</span>
+		else {//if (action.equalsIgnoreCase(&quot;updateParkingAreaInDB&quot;)){
+			
+<span class="fc" id="L109">			getParkinAreaParam(request, parkingArea2);</span>
+			
+		//	System.out.println(request.getParameter(&quot;parking_area_Name&quot;));
+			
+<span class="fc" id="L113">			parkingArea.validateParkingArea(action, parkingArea2, parkingAreaErrorMsgs);</span>
+<span class="fc" id="L114">			session.setAttribute(&quot;parkingArea&quot;, parkingArea2);</span>
+			
+		//	System.out.println(&quot;This is my testing capacitty&quot;+parkingArea2.getParking_area_name());
+			
+		
+<span class="fc bfc" id="L119" title="All 2 branches covered.">			if(!parkingAreaErrorMsgs.getErrorMsg().equals(&quot;&quot;)){</span>
+<span class="fc" id="L120">				getParkinAreaParam(request, parkingArea);</span>
+<span class="fc" id="L121">				session.setAttribute(&quot;errorMsgs&quot;, parkingAreaErrorMsgs);</span>
+<span class="fc" id="L122">				url=&quot;/updateParkingArea.jsp&quot;;</span>
+<span class="fc" id="L123">			}</span>
+			else
+			{
+<span class="fc" id="L126">				ParkigAreaDAO.updateParkingAreaDetails(parkingArea2);	</span>
+<span class="fc" id="L127">				url = &quot;/listManager.jsp&quot;;</span>
+<span class="fc" id="L128">				System.out.println(&quot;update query&quot;);</span>
+			}
+		}
+		
+		
+<span class="fc" id="L133">		getServletContext().getRequestDispatcher(url).forward(request, response);</span>
+				
+<span class="fc" id="L135">		}</span>
+		
+				
+	}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Apr 30, 2019 2:10:14 AM)</div></body></html>

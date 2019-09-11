@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ReservationTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Apr 30, 2019 2:10:14 AM)</a> &gt; <a href="../../index.html" class="el_group">parking_system</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.source.html" class="el_package">parking_system.model</a> &gt; <span class="el_source">ReservationTest.java</span></div><h1>ReservationTest.java</h1><pre class="source lang-java linenums">package parking_system.model;
+
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import junitparams.FileParameters;
+import junitparams.JUnitParamsRunner;
+
+@RunWith(JUnitParamsRunner.class)
+<span class="fc" id="L17">public class ReservationTest {</span>
+	
+	Reservation resv;
+	ReservationErrorMsgs RerrMsgs;
+
+	@Before
+	public void setUp() throws Exception {
+<span class="fc" id="L24">		resv = new Reservation();</span>
+<span class="fc" id="L25">		RerrMsgs = new ReservationErrorMsgs();</span>
+<span class="fc" id="L26">	}</span>
+
+	@Test
+	@FileParameters(&quot;test/Reservation_test_cases.csv&quot;)
+	public void test(int testcaseNo, String action, String currTime, String starttime, String endtime, String userPermit, 
+			String resPermit, String cardNumber, String	cvvNumber, String parkingArea, String floor, String history, String cart, String cam, String currentDay, String errorMsg, String timeError, 
+			String permitError, String cardNumberError, String cvvError, String spotid, String payment) {
+<span class="fc" id="L33">		List&lt;String&gt; options = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">		if (history.equals(&quot;1&quot;))</span>
+<span class="fc" id="L35">			options.add(&quot;hist&quot;);</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">		if (cam.equals(&quot;1&quot;))</span>
+<span class="fc" id="L37">			options.add(&quot;cam&quot;);</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">		if (cart.equals(&quot;1&quot;))</span>
+<span class="fc" id="L39">			options.add(&quot;cart&quot;);</span>
+		//System.out.println(&quot;Option Array: &quot; + Arrays.toString(options.toArray(new String[0])));
+<span class="fc" id="L41">		resv.setReservation(&quot;&quot;, &quot;&quot;, starttime, endtime, resPermit, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;,  &quot;&quot;, &quot;&quot;, &quot;&quot;,  &quot;&quot;, &quot;&quot;, &quot;&quot;);</span>
+<span class="fc" id="L42">		resv.setUserPermit(userPermit);</span>
+<span class="fc" id="L43">		resv.setCardNumber(cardNumber);</span>
+<span class="fc" id="L44">		resv.setCvv(cvvNumber);</span>
+<span class="fc" id="L45">		resv.setCurrTime(currTime);</span>
+<span class="fc" id="L46">		resv.validateReservation(action, resv, RerrMsgs);</span>
+<span class="fc" id="L47">		assertTrue(resv.getCart().equals(&quot;&quot;));</span>
+<span class="fc" id="L48">		assertTrue(resv.getCamera().equals(&quot;&quot;));</span>
+<span class="fc" id="L49">		assertTrue(resv.getHistory().equals(&quot;&quot;));</span>
+<span class="fc" id="L50">		assertTrue(spotid.equals(resv.generateSpotID(parkingArea, floor, resPermit, 1)));</span>
+<span class="fc" id="L51">		assertEquals(Double.parseDouble(payment), Double.parseDouble(resv.calculatePayment(options.toArray(new String[0]), Integer.parseInt(currentDay), endtime)), 0.01);</span>
+<span class="fc" id="L52">		assertTrue(resv.getUsername().equals(&quot;&quot;));</span>
+<span class="fc" id="L53">		assertTrue(resv.getReservationid().equals(&quot;&quot;));</span>
+<span class="fc" id="L54">		assertTrue(resv.getParkingarea().equals(&quot;&quot;));</span>
+<span class="fc" id="L55">		assertTrue(resv.getFloor().equals(&quot;&quot;));</span>
+<span class="fc" id="L56">		assertTrue(resv.getParkingspot().equals(&quot;&quot;));</span>
+<span class="fc" id="L57">		assertTrue(resv.getCancelled().equals(&quot;&quot;));</span>
+<span class="fc" id="L58">		assertTrue(resv.getResvdate().equals(&quot;&quot;));</span>
+<span class="fc" id="L59">		assertTrue(resv.getViolation().equals(&quot;&quot;));</span>
+<span class="fc" id="L60">		assertTrue(resv.getVehiclenumber().equals(&quot;&quot;));</span>
+<span class="fc" id="L61">		assertTrue(resv.getSpotID().equals(&quot;&quot;));</span>
+<span class="fc" id="L62">		assertTrue(resv.getPayment().equals(&quot;&quot;));</span>
+<span class="fc" id="L63">		assertTrue(resv.getCart().equals(cart));</span>
+<span class="fc" id="L64">		assertTrue(resv.getCamera().equals(cam));</span>
+<span class="fc" id="L65">		assertTrue(resv.getHistory().equals(history));</span>
+<span class="fc" id="L66">		assertTrue(errorMsg.equals(RerrMsgs.getErrorMsg()));</span>
+<span class="fc" id="L67">		assertTrue(timeError.equals(RerrMsgs.getTimeError()));</span>
+<span class="fc" id="L68">		assertTrue(permitError.equals(RerrMsgs.getPermitError()));</span>
+<span class="fc" id="L69">		assertTrue(cardNumberError.equals(RerrMsgs.getCardNumberError()));</span>
+<span class="fc" id="L70">		assertTrue(cvvError.equals(RerrMsgs.getCvvError()));</span>
+<span class="fc" id="L71">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Apr 30, 2019 2:10:14 AM)</div></body></html>

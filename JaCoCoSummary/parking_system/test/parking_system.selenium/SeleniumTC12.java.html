@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SeleniumTC12.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Apr 30, 2019 2:10:14 AM)</a> &gt; <a href="../../index.html" class="el_group">parking_system</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.source.html" class="el_package">parking_system.selenium</a> &gt; <span class="el_source">SeleniumTC12.java</span></div><h1>SeleniumTC12.java</h1><pre class="source lang-java linenums">package parking_system.selenium;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.FileInputStream;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.openqa.selenium.By;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+
+import junitparams.FileParameters;
+import junitparams.JUnitParamsRunner;
+import parking_system.functions.Parking_SystemFunctions;
+
+//update user-profile by manager, admin
+
+@RunWith(JUnitParamsRunner.class)
+<span class="fc" id="L25">public class SeleniumTC12 extends Parking_SystemFunctions {</span>
+<span class="fc" id="L26">	private StringBuffer verificationErrors = new StringBuffer();</span>
+	public static String sAppURL, sSharedUIMapPath, test_delay;
+	
+	@Before
+	public void setUp() throws Exception {
+		//Magic Code HERE
+<span class="fc" id="L32">		System.setProperty(&quot;webdriver.firefox.marionette&quot;, &quot;C:\\GeckoSelenium\\&quot;);</span>
+<span class="fc" id="L33">	    driver = new FirefoxDriver();</span>
+	    
+	    //Load Configuration File
+<span class="fc" id="L36">	    prop = new Properties(); </span>
+<span class="fc" id="L37">	    prop.load(new FileInputStream(&quot;./Configuration/HA_Configuration.properties&quot;));</span>
+<span class="fc" id="L38">	    sAppURL = prop.getProperty(&quot;sAppURL&quot;);</span>
+<span class="fc" id="L39">	    sSharedUIMapPath = prop.getProperty(&quot;SharedUIMap&quot;);</span>
+<span class="fc" id="L40">	    test_delay = prop.getProperty(&quot;test_delay&quot;);</span>
+	    
+	    //Load SharedUI Map 
+<span class="fc" id="L43">	    prop.load(new FileInputStream(sSharedUIMapPath));</span>
+<span class="fc" id="L44">	    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);</span>
+<span class="fc" id="L45">	  }</span>
+	
+	@Test
+	@FileParameters(&quot;test/Excel/TC12.csv&quot;)
+	public void testSeleniumTC0012(int testCaseNo, String userName, String pass, String userSearchName, String firstName, String lastName, String email, String password, String utaid, String phone, String streetaddress, String city, String state, String zipcode, String vehiclenumber) throws Exception {
+<span class="fc" id="L50">	    driver.get(sAppURL);</span>
+	    
+<span class="fc" id="L52">	    driver.findElement(By.xpath(prop.getProperty(&quot;Lnk_Login&quot;))).click();</span>
+
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">	    if (test_delay.equals(&quot;delay&quot;))</span>
+<span class="nc" id="L55">	    	Thread.sleep(2_000);</span>
+	    
+	    //select Login from Index page
+<span class="fc" id="L58">	    login(driver, userName,  pass);</span>
+	    
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">	    if (test_delay.equals(&quot;delay&quot;))</span>
+<span class="nc" id="L61">	    	Thread.sleep(2_000);</span>
+	    
+	    // search a user by first name
+<span class="fc" id="L64">	    searchUser(driver, userSearchName);</span>
+	    
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">	    if (test_delay.equals(&quot;delay&quot;))</span>
+<span class="nc" id="L67">	    	Thread.sleep(2_000);</span>
+	    
+	    // select the first search result
+<span class="fc" id="L70">	    driver.findElement(By.name(prop.getProperty(&quot;Radio_Btn_Select_User&quot;))).click();</span>
+<span class="fc" id="L71">	    driver.findElement(By.xpath(prop.getProperty(&quot;Btn_Revoke_User&quot;))).click();</span>
+	    
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">	    if (test_delay.equals(&quot;delay&quot;))</span>
+<span class="nc" id="L74">	    	Thread.sleep(2_000);</span>
+	    
+//Make all the fields blank to check the validations
+	    
+<span class="fc" id="L78">	    driver.findElement(By.name(&quot;firstName&quot;)).clear();</span>
+<span class="fc" id="L79">	    driver.findElement(By.name(&quot;firstName&quot;)).sendKeys(&quot;&quot;);</span>
+<span class="fc" id="L80">	    driver.findElement(By.name(&quot;lastName&quot;)).clear();</span>
+<span class="fc" id="L81">	    driver.findElement(By.name(&quot;lastName&quot;)).sendKeys(&quot;&quot;);</span>
+<span class="fc" id="L82">	    driver.findElement(By.name(&quot;email&quot;)).clear();</span>
+<span class="fc" id="L83">	    driver.findElement(By.name(&quot;email&quot;)).sendKeys(&quot;&quot;);</span>
+<span class="fc" id="L84">	    driver.findElement(By.name(&quot;password&quot;)).clear();</span>
+<span class="fc" id="L85">	    driver.findElement(By.name(&quot;password&quot;)).sendKeys(&quot;&quot;);</span>
+<span class="fc" id="L86">	    driver.findElement(By.name(&quot;utaid&quot;)).clear();</span>
+<span class="fc" id="L87">	    driver.findElement(By.name(&quot;utaid&quot;)).sendKeys(&quot;&quot;);</span>
+<span class="fc" id="L88">	    driver.findElement(By.name(&quot;phone&quot;)).clear();</span>
+<span class="fc" id="L89">	    driver.findElement(By.name(&quot;phone&quot;)).sendKeys(&quot;&quot;);</span>
+<span class="fc" id="L90">	    driver.findElement(By.name(&quot;streetaddress&quot;)).clear();</span>
+<span class="fc" id="L91">	    driver.findElement(By.name(&quot;streetaddress&quot;)).sendKeys(&quot;&quot;);</span>
+<span class="fc" id="L92">	    driver.findElement(By.name(&quot;city&quot;)).clear();</span>
+<span class="fc" id="L93">	    driver.findElement(By.name(&quot;city&quot;)).sendKeys(&quot;&quot;);</span>
+<span class="fc" id="L94">	    driver.findElement(By.name(&quot;state&quot;)).clear();</span>
+<span class="fc" id="L95">	    driver.findElement(By.name(&quot;state&quot;)).sendKeys(&quot;&quot;);</span>
+<span class="fc" id="L96">	    driver.findElement(By.name(&quot;zipcode&quot;)).clear();</span>
+<span class="fc" id="L97">	    driver.findElement(By.name(&quot;zipcode&quot;)).sendKeys(&quot;&quot;);</span>
+<span class="fc" id="L98">	    driver.findElement(By.name(&quot;vehiclenumber&quot;)).clear();</span>
+<span class="fc" id="L99">	    driver.findElement(By.name(&quot;vehiclenumber&quot;)).sendKeys(&quot;&quot;);</span>
+<span class="fc" id="L100">	    driver.findElement(By.xpath(prop.getProperty(&quot;Btn_Update_Details&quot;))).click();</span>
+	    
+	    
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">	    if (test_delay.equals(&quot;delay&quot;))</span>
+<span class="nc" id="L104">	    	Thread.sleep(2_000);</span>
+	    
+	    // Check all the error messages
+<span class="fc" id="L107">	     assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_ErrorMessage&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please correct the following errors&quot;));</span>
+<span class="fc" id="L108">	     assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_userFirstNameError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please provide First name&quot;));</span>
+<span class="fc" id="L109">	     assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_userLastNameError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please provide Last name&quot;));</span>
+<span class="fc" id="L110">	     assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_userEmailError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please provide Email&quot;));</span>
+<span class="fc" id="L111">	     assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_userPasswordError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please enter password&quot;));</span>
+<span class="fc" id="L112">	     assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_utaIDerror&quot;))).getAttribute(&quot;value&quot;).equals(&quot;UTA ID must be 10 digits in length&quot;));</span>
+<span class="fc" id="L113">	     assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_phoneError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Phone number must be 10 digits in length&quot;));</span>
+<span class="fc" id="L114">	     assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_streetAddError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please provide street address&quot;));</span>
+<span class="fc" id="L115">	     assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_cityError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please provide city name&quot;));</span>
+<span class="fc" id="L116">	     assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_stateError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please provide state name&quot;));</span>
+<span class="fc" id="L117">	     assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_zipCodeError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please provide Zip code.&quot;));</span>
+<span class="fc" id="L118">	     assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_vehicleNumberError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please provide your vehicle number&quot;));</span>
+	     
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">	     if (test_delay.equals(&quot;delay&quot;))</span>
+<span class="nc" id="L121">		    	Thread.sleep(2_000);</span>
+	     
+	    // call to edit user function
+<span class="fc" id="L124">	    editUser(driver, firstName, lastName, email, password, utaid, phone, streetaddress, city, state, zipcode, vehiclenumber);</span>
+	 
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">	    if (test_delay.equals(&quot;delay&quot;))</span>
+<span class="nc" id="L127">	    	Thread.sleep(2_000);</span>
+	   
+<span class="fc" id="L129">	    logout(driver);</span>
+	    
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">	    if (test_delay.equals(&quot;delay&quot;))</span>
+<span class="nc" id="L132">	    	Thread.sleep(2_000);</span>
+	    //return to HomePage
+<span class="fc" id="L134">	    driver.findElement(By.xpath(prop.getProperty(&quot;Lnk_Login_Homepage&quot;))).click();</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">	    if (test_delay.equals(&quot;delay&quot;))</span>
+<span class="nc" id="L136">	    	Thread.sleep(2_000);</span>
+	     
+<span class="fc" id="L138">	}</span>
+	
+	@After
+	public void tearDown() throws Exception {
+<span class="fc" id="L142">	    driver.quit();</span>
+<span class="fc" id="L143">	    String verificationErrorString = verificationErrors.toString();</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">	    if (!&quot;&quot;.equals(verificationErrorString)) {</span>
+<span class="nc" id="L145">	      fail(verificationErrorString);</span>
+	    }
+<span class="fc" id="L147">	    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Apr 30, 2019 2:10:14 AM)</div></body></html>

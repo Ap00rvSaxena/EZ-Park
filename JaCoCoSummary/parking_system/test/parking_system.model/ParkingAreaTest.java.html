@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ParkingAreaTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Apr 30, 2019 2:10:14 AM)</a> &gt; <a href="../../index.html" class="el_group">parking_system</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.source.html" class="el_package">parking_system.model</a> &gt; <span class="el_source">ParkingAreaTest.java</span></div><h1>ParkingAreaTest.java</h1><pre class="source lang-java linenums">package parking_system.model;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import junitparams.FileParameters;
+import junitparams.JUnitParamsRunner;
+
+
+@RunWith(JUnitParamsRunner.class)
+<span class="fc" id="L14">public class ParkingAreaTest {</span>
+
+	ParkingArea parkingArea;
+	ParkingAreaErrorMsgs parkingAreaErrorMsgs;
+	
+	
+	@Before
+	public void setUp() throws Exception {
+<span class="fc" id="L22">		parkingArea = new ParkingArea();</span>
+<span class="fc" id="L23">		parkingAreaErrorMsgs= new ParkingAreaErrorMsgs();	</span>
+<span class="fc" id="L24">	}</span>
+	
+	@Test
+	@FileParameters(&quot;test/ParkingArea_testcases.csv&quot;)
+	public void test(int testcaseNo, String action,String parking_area_name, String type, String floor, String capacity,String reserved,String available,String errorMsg,String ParkingAreaNameerrorMsg,String floorerrorMsg,String capacityerrorMsg,String reservederrorMsg,String availableerrorMsg) {
+<span class="fc" id="L29">		parkingArea.setParkingArea(parking_area_name, type, floor, capacity, reserved, available);</span>
+<span class="fc" id="L30">		parkingArea.validateParkingArea(action, parkingArea, parkingAreaErrorMsgs);</span>
+<span class="fc" id="L31">		assertTrue(parkingArea.getType().equals(type));</span>
+<span class="fc" id="L32">		assertTrue(errorMsg.equals(parkingAreaErrorMsgs.getErrorMsg()));</span>
+<span class="fc" id="L33">		assertTrue(ParkingAreaNameerrorMsg.equals(parkingAreaErrorMsgs.getParkingAreaNameError()));</span>
+<span class="fc" id="L34">		assertTrue(floorerrorMsg.equals(parkingAreaErrorMsgs.getFloorError()));</span>
+<span class="fc" id="L35">		assertTrue(capacityerrorMsg.equals(parkingAreaErrorMsgs.getCapacityError()));</span>
+<span class="fc" id="L36">		assertTrue(reservederrorMsg.equals(parkingAreaErrorMsgs.getReservedErro()));</span>
+<span class="fc" id="L37">		assertTrue(availableerrorMsg.equals(parkingAreaErrorMsgs.getAvailableError()));</span>
+<span class="fc" id="L38">		}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Apr 30, 2019 2:10:14 AM)</div></body></html>

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ReservationController.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Apr 30, 2019 2:10:14 AM)</a> &gt; <a href="../../index.html" class="el_group">parking_system</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">parking_system.controller</a> &gt; <span class="el_source">ReservationController.java</span></div><h1>ReservationController.java</h1><pre class="source lang-java linenums">package parking_system.controller;
+
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.TimeZone;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import parking_system.data.ParkingDao;
+import parking_system.data.ReservationDAO;
+import parking_system.data.UserDAO;
+import parking_system.model.ReservationErrorMsgs;
+import parking_system.model.ParkingSpot;
+import parking_system.model.Reservation;
+
+/**
+ * Servlet implementation class ReservationController
+ */
+@WebServlet(&quot;/ReservationController&quot;)
+<span class="fc" id="L28">public class ReservationController extends HttpServlet {</span>
+	private static final long serialVersionUID = 1L;
+<span class="fc" id="L30">    Calendar calendar = Calendar.getInstance(TimeZone.getDefault());</span>
+<span class="fc" id="L31">    public int currentDay = calendar.get(Calendar.DAY_OF_WEEK);</span>
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+<span class="fc" id="L35">		String action = request.getParameter(&quot;action&quot;), url=&quot;&quot;;</span>
+<span class="fc" id="L36">		HttpSession session = request.getSession();</span>
+<span class="fc" id="L37">		Reservation reservation = new Reservation();</span>
+<span class="fc" id="L38">		ReservationErrorMsgs rErrorMsgs = new ReservationErrorMsgs();</span>
+<span class="fc" id="L39">		StringBuilder currTime = new StringBuilder(java.time.LocalTime.now().toString());</span>
+<span class="fc" id="L40">		currTime.delete(4, currTime.length()-1);</span>
+<span class="fc" id="L41">		currTime.deleteCharAt(2);</span>
+		
+<span class="fc bfc" id="L43" title="All 2 branches covered.">		if(action.equalsIgnoreCase(&quot;searchP&quot;)) {</span>
+<span class="fc" id="L44">			StringBuilder st = new StringBuilder(request.getParameter(&quot;starttime&quot;));</span>
+<span class="fc" id="L45">			StringBuilder et = new StringBuilder(request.getParameter(&quot;endtime&quot;));</span>
+<span class="fc" id="L46">			reservation.setCurrTime(currTime.toString());</span>
+<span class="fc" id="L47">			reservation.setStarttime(st.deleteCharAt(2).toString());</span>
+<span class="fc" id="L48">			reservation.setEndtime(et.deleteCharAt(2).toString());</span>
+<span class="fc" id="L49">			System.out.println(&quot;Starttime: &quot; + st.toString()+&quot; EndTime: &quot;+ et.toString() + &quot; Diff: &quot; + (Integer.parseInt(et.toString())-Integer.parseInt(st.toString())));</span>
+<span class="fc" id="L50">			reservation.validateReservation(action, reservation, rErrorMsgs);</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">			if(!rErrorMsgs.getErrorMsg().equals(&quot;&quot;)){</span>
+<span class="fc" id="L52">				session.setAttribute(&quot;rErrorMsgs&quot;, rErrorMsgs);</span>
+<span class="fc" id="L53">				url=&quot;/searchParking.jsp&quot;;</span>
+<span class="fc" id="L54">			}</span>
+			else{
+<span class="fc" id="L56">				session.removeAttribute(&quot;rErrorMsgs&quot;);</span>
+<span class="fc" id="L57">				ArrayList&lt;ParkingSpot&gt; parkingInDB = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L58">				parkingInDB = ParkingDao.getAvailableParking(st.toString(),et.toString());</span>
+<span class="fc" id="L59">				session.setAttribute(&quot;PARKINGS&quot;, parkingInDB);</span>
+<span class="fc" id="L60">				session.setAttribute(&quot;starttime&quot;, st.toString());</span>
+<span class="fc" id="L61">				session.setAttribute(&quot;endtime&quot;, et.toString());</span>
+<span class="fc" id="L62">				url=&quot;/listParking.jsp&quot;;</span>
+			}
+<span class="fc" id="L64">		}</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		else if(action.equalsIgnoreCase(&quot;finalPayment&quot;)) {</span>
+<span class="fc" id="L66">			System.out.println(&quot;in final payment&quot;);</span>
+<span class="fc" id="L67">			String radioBut = request.getParameter(&quot;select&quot;);</span>
+<span class="fc" id="L68">			String reservationDet[] = radioBut.split(&quot;,&quot;);</span>
+			
+<span class="fc" id="L70">			session.setAttribute(&quot;parkingArea&quot;, reservationDet[0]);</span>
+<span class="fc" id="L71">			session.setAttribute(&quot;resPermit&quot;, reservationDet[1]);</span>
+<span class="fc" id="L72">			session.setAttribute(&quot;floor&quot;, reservationDet[2]);</span>
+<span class="fc" id="L73">			session.setAttribute(&quot;capacity&quot;, reservationDet[3]);</span>
+<span class="fc" id="L74">			session.setAttribute(&quot;avialable&quot;, reservationDet[4]);</span>
+			
+<span class="fc" id="L76">			reservation.setParkingarea(reservationDet[0]);</span>
+<span class="fc" id="L77">			reservation.setPermit(reservationDet[1]);</span>
+<span class="fc" id="L78">			reservation.setFloor(reservationDet[2]);</span>
+<span class="fc" id="L79">			reservation.setUserPermit(session.getAttribute(&quot;permit&quot;).toString());</span>
+<span class="fc" id="L80">			reservation.setCurrTime(currTime.toString());</span>
+<span class="fc" id="L81">			reservation.validateReservation(action, reservation, rErrorMsgs);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">			if(!rErrorMsgs.getErrorMsg().equals(&quot;&quot;)){</span>
+<span class="fc" id="L83">				session.setAttribute(&quot;rErrorMsgs&quot;, rErrorMsgs);</span>
+<span class="fc" id="L84">				url=&quot;/listParking.jsp&quot;;</span>
+<span class="fc" id="L85">			}</span>
+			else{
+<span class="fc" id="L87">				session.removeAttribute(&quot;rErrorMsgs&quot;);</span>
+<span class="fc" id="L88">				String [] options = request.getParameterValues(&quot;optionsv&quot;);</span>
+				
+<span class="fc" id="L90">				String finamount = reservation.calculatePayment(options, currentDay, session.getAttribute(&quot;endtime&quot;).toString());;</span>
+						
+<span class="fc" id="L92">				System.out.println(&quot;Current Day: &quot; + calendar.get(Calendar.DAY_OF_WEEK));</span>
+<span class="fc" id="L93">				System.out.println(&quot;ENdTime: &quot; + session.getAttribute(&quot;endtime&quot;).toString());</span>
+<span class="fc" id="L94">				System.out.println(&quot;amount: $&quot;+ (finamount) + &quot; Cart: &quot; + reservation.getCart() + &quot; hist: &quot; +reservation.getHistory()+ &quot; Cam: &quot; +reservation.getCamera());</span>
+<span class="fc" id="L95">				session.setAttribute(&quot;amount&quot;, &quot;$ &quot;+(finamount));</span>
+<span class="fc" id="L96">				session.setAttribute(&quot;cart&quot;, reservation.getCart());</span>
+<span class="fc" id="L97">				session.setAttribute(&quot;hist&quot;, reservation.getHistory());</span>
+<span class="fc" id="L98">				session.setAttribute(&quot;cam&quot;, reservation.getCamera());</span>
+				
+<span class="fc" id="L100">				String AlphaNumericString = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span>
+	                    + &quot;0123456789&quot;
+	                    + &quot;abcdefghijklmnopqrstuvxyz&quot;; 
+
+<span class="fc" id="L104">				StringBuilder sb = new StringBuilder(); </span>
+				
+<span class="fc bfc" id="L106" title="All 2 branches covered.">				for (int i = 0; i &lt; 10; i++) { </span>
+				
+<span class="fc" id="L108">				int index = (int)(AlphaNumericString.length()* Math.random()); </span>
+				
+<span class="fc" id="L110">				sb.append(AlphaNumericString.charAt(index)); </span>
+				} 																		
+				
+<span class="fc" id="L113">				int parkingSpot = Integer.parseInt(session.getAttribute(&quot;capacity&quot;).toString()) - Integer.parseInt(session.getAttribute(&quot;avialable&quot;).toString()) + 1 ;</span>
+<span class="fc" id="L114">				System.out.println(&quot;pspot: &quot;+parkingSpot);</span>
+				
+<span class="fc" id="L116">				String spotId = reservation.generateSpotID(session.getAttribute(&quot;parkingArea&quot;).toString(), session.getAttribute(&quot;floor&quot;).toString(), session.getAttribute(&quot;resPermit&quot;).toString(), parkingSpot);</span>
+				
+<span class="fc" id="L118">				System.out.println(&quot;SpotID: &quot; + spotId);</span>
+				
+<span class="fc" id="L120">				List&lt;String&gt; list = new ArrayList&lt;String&gt;();</span>
+				
+<span class="fc" id="L122">				list.add(session.getAttribute(&quot;username&quot;).toString()); //to be updated</span>
+<span class="fc" id="L123">				list.add(sb.toString());</span>
+<span class="fc" id="L124">				list.add(session.getAttribute(&quot;starttime&quot;).toString());</span>
+<span class="fc" id="L125">				list.add(session.getAttribute(&quot;endtime&quot;).toString());</span>
+<span class="fc" id="L126">				list.add(session.getAttribute(&quot;resPermit&quot;).toString());</span>
+<span class="fc" id="L127">				list.add(session.getAttribute(&quot;parkingArea&quot;).toString());</span>
+<span class="fc" id="L128">				list.add(session.getAttribute(&quot;floor&quot;).toString());</span>
+<span class="fc" id="L129">				list.add(String.valueOf(parkingSpot));</span>
+<span class="fc" id="L130">				list.add(String.valueOf(0));</span>
+<span class="fc" id="L131">				list.add(&quot;revdate&quot;);</span>
+<span class="fc" id="L132">				list.add(&quot;NULL&quot;);</span>
+<span class="fc" id="L133">				list.add(session.getAttribute(&quot;vehiclenumber&quot;).toString());</span>
+<span class="fc" id="L134">				list.add(session.getAttribute(&quot;cart&quot;).toString());</span>
+<span class="fc" id="L135">				list.add(session.getAttribute(&quot;cam&quot;).toString());</span>
+<span class="fc" id="L136">				list.add(session.getAttribute(&quot;hist&quot;).toString());</span>
+<span class="fc" id="L137">				list.add(String.valueOf(finamount));</span>
+<span class="fc" id="L138">				list.add(spotId);</span>
+				
+<span class="fc" id="L140">				session.setAttribute(&quot;reservationdetails&quot;, list);</span>
+<span class="fc" id="L141">				url=&quot;/payment.jsp&quot;;</span>
+			}
+<span class="fc" id="L143">		}</span>
+		
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		else if(action.equalsIgnoreCase(&quot;EndPage&quot;)) {</span>
+<span class="fc" id="L146">			String cardNumber = request.getParameter(&quot;card&quot;);</span>
+<span class="fc" id="L147">			String cvv = request.getParameter(&quot;cvv&quot;);</span>
+<span class="fc" id="L148">			reservation.setCardNumber(cardNumber);</span>
+<span class="fc" id="L149">			reservation.setCvv(cvv);</span>
+<span class="fc" id="L150">			System.out.println(&quot;CN: &quot; + cardNumber + &quot; cvv: &quot; + cvv);</span>
+<span class="fc" id="L151">			reservation.validateReservation(action, reservation, rErrorMsgs);</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">			if(!rErrorMsgs.getErrorMsg().equals(&quot;&quot;)){</span>
+<span class="fc" id="L153">				session.setAttribute(&quot;rErrorMsgs&quot;, rErrorMsgs);</span>
+<span class="fc" id="L154">				session.setAttribute(&quot;reservation&quot;, reservation);</span>
+<span class="fc" id="L155">				url=&quot;/payment.jsp&quot;;</span>
+<span class="fc" id="L156">			}</span>
+			else{
+<span class="fc" id="L158">			List&lt;String&gt; ls = (List&lt;String&gt;) session.getAttribute(&quot;reservationdetails&quot;);</span>
+			
+<span class="fc" id="L160">			Reservation reservation2 = new Reservation();</span>
+<span class="fc" id="L161">			reservation2.setReservation(ls.get(0), ls.get(1), ls.get(2), ls.get(3), ls.get(4), ls.get(5), ls.get(6), ls.get(7), ls.get(8), ls.get(9), ls.get(10), ls.get(11), ls.get(12), ls.get(13), ls.get(14), ls.get(15), ls.get(16));</span>
+<span class="fc" id="L162">			session.setAttribute(&quot;ref&quot;, ls.get(1));</span>
+<span class="fc" id="L163">			session.setAttribute(&quot;spotID&quot;, ls.get(16));</span>
+<span class="fc" id="L164">			ReservationDAO.insertReservation(reservation2);</span>
+<span class="fc" id="L165">			ReservationDAO.updateReservationSpot(ls.get(16),ls.get(2), ls.get(3),ls.get(1));</span>
+<span class="fc" id="L166">			url=&quot;/finalPage.jsp&quot;;</span>
+			}
+<span class="fc" id="L168">		}</span>
+		
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		else if(action.equalsIgnoreCase(&quot;searchSpot&quot;)) {</span>
+			
+<span class="fc" id="L172">			String spotid = request.getParameter(&quot;spotId&quot;);</span>
+<span class="fc" id="L173">			System.out.println(&quot;spot id is &quot;+spotid);</span>
+<span class="fc" id="L174">			ParkingSpot pspot = new ParkingSpot();</span>
+<span class="fc" id="L175">			pspot = ParkingDao.getParticularSpot(spotid);</span>
+<span class="fc" id="L176">			System.out.println(&quot;here :&quot; + pspot);</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">			if(!pspot.getParkingAreaName().equals(&quot;&quot;)){</span>
+<span class="fc" id="L178">				session.removeAttribute(&quot;sPSErrMsg&quot;);</span>
+<span class="fc" id="L179">				session.setAttribute(&quot;PSPOT&quot;, pspot);</span>
+<span class="fc" id="L180">				url=&quot;/listParkingSpot.jsp&quot;;</span>
+<span class="fc" id="L181">			}</span>
+			else {
+<span class="fc" id="L183">				session.setAttribute(&quot;sPSErrMsg&quot;, &quot;No Parking Spot found&quot;);</span>
+<span class="fc" id="L184">				url=&quot;/searchParkingSpot.jsp&quot;;</span>
+			}
+<span class="fc" id="L186">		}</span>
+		
+		else {//if(action.equalsIgnoreCase(&quot;toggleSpot&quot;)) {
+			
+<span class="fc" id="L190">			String spotid = request.getParameter(&quot;pidtoggle&quot;);</span>
+<span class="fc" id="L191">			System.out.println(&quot;spot id to toggle is &quot;+spotid);</span>
+			
+<span class="fc" id="L193">			ParkingDao.deactivateSpot(spotid);</span>
+			
+<span class="fc" id="L195">			url=&quot;/listManager.jsp&quot;;</span>
+		}
+		
+<span class="fc" id="L198">		getServletContext().getRequestDispatcher(url).forward(request, response);</span>
+<span class="fc" id="L199">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Apr 30, 2019 2:10:14 AM)</div></body></html>

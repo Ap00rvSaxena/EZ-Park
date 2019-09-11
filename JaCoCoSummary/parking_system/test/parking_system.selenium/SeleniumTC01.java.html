@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SeleniumTC01.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Apr 30, 2019 2:10:14 AM)</a> &gt; <a href="../../index.html" class="el_group">parking_system</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.source.html" class="el_package">parking_system.selenium</a> &gt; <span class="el_source">SeleniumTC01.java</span></div><h1>SeleniumTC01.java</h1><pre class="source lang-java linenums">package parking_system.selenium;
+
+import java.io.FileInputStream;
+import java.util.Properties;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+import org.junit.*;
+import org.junit.runner.RunWith;
+
+import static org.junit.Assert.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import junitparams.FileParameters;
+import junitparams.JUnitParamsRunner;
+import parking_system.functions.Parking_SystemFunctions;
+
+@RunWith(JUnitParamsRunner.class)
+<span class="fc" id="L19">public class SeleniumTC01 extends Parking_SystemFunctions {</span>
+<span class="fc" id="L20">	private StringBuffer verificationErrors = new StringBuffer();</span>
+	public static String sAppURL, sSharedUIMapPath, test_delay;
+	
+	@Before
+	public void setUp() throws Exception {
+		//Magic Code HERE
+<span class="fc" id="L26">		System.setProperty(&quot;webdriver.firefox.marionette&quot;, &quot;C:\\GeckoSelenium\\&quot;);</span>
+<span class="fc" id="L27">	    driver = new FirefoxDriver();</span>
+	    
+	    //Load Configuration File
+<span class="fc" id="L30">	    prop = new Properties();</span>
+<span class="fc" id="L31">	    prop.load(new FileInputStream(&quot;./Configuration/HA_Configuration.properties&quot;));</span>
+<span class="fc" id="L32">	    sAppURL = prop.getProperty(&quot;sAppURL&quot;);</span>
+<span class="fc" id="L33">	    sSharedUIMapPath = prop.getProperty(&quot;SharedUIMap&quot;);</span>
+<span class="fc" id="L34">	    test_delay = prop.getProperty(&quot;test_delay&quot;);</span>
+	    
+	    //Load SharedUI Map
+<span class="fc" id="L37">	    prop.load(new FileInputStream(sSharedUIMapPath));</span>
+<span class="fc" id="L38">	    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);</span>
+<span class="fc" id="L39">	  }</span>
+	@Test
+	@FileParameters(&quot;test/Excel/TC01.csv&quot;)
+	public void testSeleniumTC1(int testCaseNo, String username, String firstName, String lastName, String email, String password, String role, String utaid, String phone, String streetaddress, String city, String state, String zipcode, String vehiclenumber, String permit) throws Exception {
+<span class="fc" id="L43">	    driver.get(sAppURL);</span>
+	    //select Register from Index page
+<span class="fc" id="L45">	    driver.findElement(By.xpath(prop.getProperty(&quot;Lnk_Register&quot;))).click();</span>
+	    //driver.findElement(By.xpath(prop.getProperty(&quot;Btn_Register_registerUser&quot;))).click();
+	    // Register an Empty Form for USER role
+<span class="fc" id="L48">	    register(driver, &quot;&quot;,  &quot;&quot;,  &quot;&quot;,  &quot;&quot;,  &quot;&quot;,  role,  &quot;&quot;,  &quot;&quot;,  &quot;&quot;,  &quot;&quot;,  &quot;&quot;,  &quot;&quot;,  &quot;&quot;,  &quot;BASIC&quot;);</span>
+	    // verify error messages
+<span class="fc" id="L50">	    assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_ErrorMessage&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please correct the following errors&quot;));</span>
+<span class="fc" id="L51">	    assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_userNameError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please provide username&quot;));</span>
+<span class="fc" id="L52">	    assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_userFirstNameError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please provide First name&quot;));</span>
+<span class="fc" id="L53">	    assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_userLastNameError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please provide Last name&quot;));</span>
+<span class="fc" id="L54">	    assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_userEmailError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please provide Email&quot;));</span>
+<span class="fc" id="L55">	    assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_userPasswordError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please provide password&quot;));</span>
+<span class="fc" id="L56">	    assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_utaIDerror&quot;))).getAttribute(&quot;value&quot;).equals(&quot;UTA ID must be 10 digits in length&quot;));</span>
+<span class="fc" id="L57">	    assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_phoneError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Phone number must be 10 digits in length&quot;));</span>
+<span class="fc" id="L58">	    assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_streetAddError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please provide street address&quot;));</span>
+<span class="fc" id="L59">	    assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_cityError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please provide city name&quot;));</span>
+<span class="fc" id="L60">	    assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_stateError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please provide state name&quot;));</span>
+<span class="fc" id="L61">	    assertTrue(driver.findElement(By.name(prop.getProperty(&quot;Lbl_Register_zipCodeError&quot;))).getAttribute(&quot;value&quot;).equals(&quot;Please provide Zip code.&quot;));</span>
+	    //Followed by Register for USER role with all valid Entries
+<span class="fc" id="L63">	    register(driver, username, firstName, lastName, email, password,  role,  utaid,  phone,  streetaddress,  city,  state,  zipcode,  vehiclenumber,  permit);</span>
+	    // Verify Links on Index Page
+<span class="fc" id="L65">	    assertTrue(isElementPresent(By.xpath(prop.getProperty(&quot;Lnk_Index&quot;))));</span>
+<span class="fc" id="L66">	    assertTrue(driver.findElement(By.xpath(prop.getProperty(&quot;Lnk_Index&quot;))).getText().equals(&quot;Arlington Parking, Inc.&quot;));</span>
+<span class="fc" id="L67">	    assertTrue(driver.findElement(By.xpath(prop.getProperty(&quot;Lnk_Register&quot;))).getText().equals(&quot;Register&quot;));</span>
+<span class="fc" id="L68">	    assertTrue(driver.findElement(By.xpath(prop.getProperty(&quot;Lnk_Login&quot;))).getText().equals(&quot;Login&quot;));</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">	    if (test_delay.equals(&quot;delay&quot;))</span>
+<span class="nc" id="L70">	    	Thread.sleep(2_000);</span>
+<span class="fc" id="L71">	    }</span>
+	@After
+	public void tearDown() throws Exception {
+<span class="fc" id="L74">	    driver.quit();</span>
+<span class="fc" id="L75">	    String verificationErrorString = verificationErrors.toString();</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">	    if (!&quot;&quot;.equals(verificationErrorString)) {</span>
+<span class="nc" id="L77">	      fail(verificationErrorString);</span>
+	    }
+<span class="fc" id="L79">	    }</span>
+	private boolean isElementPresent(By by) {
+	    try {
+<span class="fc" id="L82">	      driver.findElement(by);</span>
+<span class="fc" id="L83">	      return true;</span>
+<span class="nc" id="L84">	    } catch (NoSuchElementException e) {</span>
+<span class="nc" id="L85">	      return false;</span>
+	    }
+	  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Apr 30, 2019 2:10:14 AM)</div></body></html>

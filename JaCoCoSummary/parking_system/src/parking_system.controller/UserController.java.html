@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>UserController.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (Apr 30, 2019 2:10:14 AM)</a> &gt; <a href="../../index.html" class="el_group">parking_system</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">parking_system.controller</a> &gt; <span class="el_source">UserController.java</span></div><h1>UserController.java</h1><pre class="source lang-java linenums">package parking_system.controller;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServlet;
+
+import parking_system.data.ReservationDAO;
+import parking_system.data.UserDAO;
+import parking_system.model.Reservation;
+import parking_system.model.User;
+import parking_system.model.UserErrorMsgs;
+
+@WebServlet(&quot;/UserController&quot;)
+<span class="fc" id="L20">public class UserController extends HttpServlet {</span>
+	
+	private static final long serialVersionUID = 1L;
+<span class="fc" id="L23">	private String editUserUsername=null;</span>
+<span class="fc" id="L24">	private String userRole = null;</span>
+<span class="fc" id="L25">	private String userStatus = null;</span>
+<span class="fc" id="L26">	private String selectedUserReservation = null;</span>
+<span class="fc" id="L27">	private String selectedReservationID = null;</span>
+    
+	private void getUserParam (HttpServletRequest request, User user) {
+<span class="fc" id="L30">		user.setUser(request.getParameter(&quot;username&quot;),request.getParameter(&quot;firstName&quot;),request.getParameter(&quot;lastName&quot;),request.getParameter(&quot;email&quot;), request.getParameter(&quot;password&quot;), request.getParameter(&quot;role&quot;),request.getParameter(&quot;utaid&quot;),request.getParameter(&quot;phone&quot;),request.getParameter(&quot;streetaddress&quot;),request.getParameter(&quot;city&quot;),request.getParameter(&quot;state&quot;),request.getParameter(&quot;zipcode&quot;),request.getParameter(&quot;vehiclenumber&quot;),request.getParameter(&quot;status&quot;),request.getParameter(&quot;permit&quot;), request.getParameter(&quot;comments&quot;));</span>
+<span class="fc" id="L31">	}</span>
+	
+	private void getReservationParam(HttpServletRequest request, Reservation reservation) {
+<span class="fc" id="L34">		reservation.setReservation(request.getParameter(&quot;username&quot;), request.getParameter(&quot;reservationid&quot;), request.getParameter(&quot;starttime&quot;), request.getParameter(&quot;endtime&quot;), request.getParameter(&quot;permit&quot;), request.getParameter(&quot;parkingarea&quot;), request.getParameter(&quot;floor&quot;), request.getParameter(&quot;parkingspot&quot;), request.getParameter(&quot;cancelled&quot;), request.getParameter(&quot;resvdate&quot;), request.getParameter(&quot;violation&quot;), request.getParameter(&quot;vehiclenumber&quot;), request.getParameter(&quot;cart&quot;), request.getParameter(&quot;camera&quot;), request.getParameter(&quot;history&quot;), request.getParameter(&quot;payment&quot;), request.getParameter(&quot;spotID&quot;));		</span>
+<span class="fc" id="L35">	}</span>
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+<span class="fc" id="L38">		doPost(request, response);</span>
+<span class="fc" id="L39">	}</span>
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+<span class="fc" id="L43">		String action = request.getParameter(&quot;action&quot;), url=&quot;&quot;;</span>
+<span class="fc" id="L44">		HttpSession session = request.getSession();</span>
+<span class="fc" id="L45">		User user = new User();</span>
+<span class="fc" id="L46">		Reservation reservation = new Reservation();</span>
+<span class="fc" id="L47">		UserErrorMsgs userErrorMsgs = new UserErrorMsgs();</span>
+
+<span class="fc bfc" id="L49" title="All 2 branches covered.">		if (action.equalsIgnoreCase(&quot;saveUser&quot;) ) {  </span>
+<span class="fc" id="L50">			getUserParam(request, user);</span>
+<span class="fc" id="L51">			user.validateUser(action, user, userErrorMsgs);</span>
+<span class="fc" id="L52">			session.setAttribute(&quot;user&quot;, user);</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">			if(!userErrorMsgs.getErrorMsg().equals(&quot;&quot;)){</span>
+<span class="fc" id="L54">				getUserParam(request, user);</span>
+<span class="fc" id="L55">				session.setAttribute(&quot;errorMsgs&quot;, userErrorMsgs);</span>
+<span class="fc" id="L56">				url=&quot;/formUser.jsp&quot;;</span>
+<span class="fc" id="L57">			}</span>
+			else{
+<span class="fc" id="L59">				UserDAO.insertUser(user);</span>
+<span class="fc" id="L60">					session.invalidate();</span>
+<span class="fc" id="L61">					url=&quot;/index.jsp&quot;;</span>
+			}
+			
+<span class="fc" id="L64">		}</span>
+		
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		else if (action.equalsIgnoreCase(&quot;loginUser&quot;)){</span>
+<span class="fc" id="L67">			String username = request.getParameter(&quot;username&quot;);</span>
+<span class="fc" id="L68">			String password = request.getParameter(&quot;password&quot;);</span>
+<span class="fc" id="L69">			getUserParam(request, user);</span>
+<span class="fc" id="L70">			user.validateUser(action, user, userErrorMsgs);</span>
+<span class="fc" id="L71">			session.setAttribute(&quot;user&quot;, user);</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">			if(!userErrorMsgs.getErrorMsg().equals(&quot;&quot;)){</span>
+<span class="fc" id="L73">				session.setAttribute(&quot;errorMsgs&quot;, userErrorMsgs);</span>
+<span class="fc" id="L74">				url=&quot;/login.jsp&quot;;</span>
+<span class="fc" id="L75">			}</span>
+			else {
+<span class="fc" id="L77">				user = UserDAO.loginUser(username, password);</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">				if (user!=null){</span>
+<span class="fc" id="L79">					session.setAttribute(&quot;greetingField1&quot;, &quot;Welcome Back, &quot; + user.getUsername());</span>
+					
+<span class="fc" id="L81">					editUserUsername=user.getUsername();</span>
+<span class="fc" id="L82">					userRole=user.getRole();</span>
+<span class="fc" id="L83">					userStatus=user.getStatus();</span>
+					
+<span class="fc" id="L85">					session.setAttribute(&quot;role&quot;, userRole);</span>
+<span class="fc" id="L86">					session.setAttribute(&quot;username&quot;, user.getUsername());</span>
+<span class="fc" id="L87">					session.setAttribute(&quot;status&quot;, user.getStatus());</span>
+<span class="fc" id="L88">					session.setAttribute(&quot;vehiclenumber&quot;, user.getVehiclenumber());</span>
+<span class="fc" id="L89">					session.setAttribute(&quot;permit&quot;, user.getPermit());</span>
+					
+<span class="fc" id="L91">					System.out.println(&quot;user role: &quot; + userRole);</span>
+<span class="fc" id="L92">					System.out.println(&quot;editUserUsername: &quot; + editUserUsername);</span>
+<span class="fc" id="L93">					System.out.println(&quot;Set Role(param): &quot;+ userRole);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">					if(user.getRole().equals(&quot;USER&quot;))</span>
+<span class="fc" id="L95">						url=&quot;/listUser.jsp&quot;;</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">					else if(user.getRole().equals(&quot;MANAGER&quot;))</span>
+<span class="fc" id="L97">						url=&quot;/listManager.jsp&quot;;</span>
+					else
+<span class="fc" id="L99">						url=&quot;/listAdmin.jsp&quot;;</span>
+<span class="fc" id="L100">				}</span>
+				else{
+<span class="fc" id="L102">					System.out.println(&quot;userController: &quot;+ user);</span>
+<span class="fc" id="L103">					session.removeAttribute(&quot;errorMsgs&quot;);</span>
+<span class="fc" id="L104">					session.setAttribute(&quot;greetingField&quot;, &quot;User Not Found!&quot;);</span>
+<span class="fc" id="L105">					url=&quot;/login.jsp&quot;;</span>
+				}
+			}
+<span class="fc" id="L108">		}</span>
+		
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		else if (action.equalsIgnoreCase(&quot;logoutUser&quot;)){</span>
+<span class="fc" id="L111">			session.invalidate();</span>
+<span class="fc" id="L112">			url=&quot;/login.jsp&quot;;</span>
+<span class="fc" id="L113">		}</span>
+		
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		else if (action.equalsIgnoreCase(&quot;searchUser&quot;) ) {</span>
+<span class="fc" id="L116">				String searchString = request.getParameter(&quot;search&quot;);</span>
+<span class="fc" id="L117">				String searchFilter = request.getParameter(&quot;searchFilter&quot;);</span>
+<span class="fc" id="L118">				user.setSearch(searchString);</span>
+<span class="fc" id="L119">				user.setSearchfilter(searchFilter);</span>
+<span class="fc" id="L120">				System.out.println(&quot;Search: &quot; + user.getSearch()+ &quot; Filter: &quot;+ user.getSearchfilter());</span>
+<span class="fc" id="L121">				user.validateUser(action, user, userErrorMsgs);</span>
+<span class="fc" id="L122">				ArrayList&lt;User&gt; UserInDB = new ArrayList&lt;User&gt;();</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">				if(!userErrorMsgs.getErrorMsg().equals(&quot;&quot;)){</span>
+<span class="fc" id="L124">					session.setAttribute(&quot;errorMsgs&quot;, userErrorMsgs);</span>
+<span class="fc" id="L125">					url=&quot;/searchUser.jsp&quot;;</span>
+<span class="fc" id="L126">				}</span>
+				else {
+<span class="fc bfc" id="L128" title="All 2 branches covered.">					if (searchFilter.equals(&quot;firstName&quot;)){</span>
+<span class="fc" id="L129">						UserInDB=UserDAO.searchUserwithFname(searchString);</span>
+<span class="fc" id="L130">					}</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">					else if(searchFilter.equals(&quot;lastName&quot;)){</span>
+<span class="fc" id="L132">						UserInDB=UserDAO.searchUserwithLname(searchString);</span>
+<span class="fc" id="L133">					}</span>
+					else{
+<span class="fc" id="L135">						UserInDB=UserDAO.searchUserwithUid(searchString);</span>
+					}
+<span class="fc" id="L137">					session.setAttribute(&quot;USERS&quot;, UserInDB);</span>
+<span class="fc" id="L138">					session.setAttribute(&quot;searchMsg&quot;, UserInDB.size() + &quot; Search Results Found!&quot;);</span>
+<span class="fc" id="L139">					session.setAttribute(&quot;role&quot;, userRole);</span>
+<span class="fc" id="L140">					System.out.println(&quot;Search with Role: &quot;+ userRole);</span>
+<span class="fc" id="L141">					session.removeAttribute(&quot;errorMsgs&quot;);</span>
+<span class="fc" id="L142">					url=&quot;/searchUserList.jsp&quot;;</span>
+				}
+<span class="fc" id="L144">			}</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		else if(action.equalsIgnoreCase(&quot;userEditProfile&quot;)){</span>
+<span class="fc" id="L146">			System.out.println(&quot;update: &quot;+user.getUsername());</span>
+<span class="fc" id="L147">			User updateUser = new User();</span>
+<span class="fc" id="L148">			updateUser = UserDAO.getUserByUsername(editUserUsername); </span>
+<span class="fc" id="L149">			session.setAttribute(&quot;UPDATEUSER&quot;, updateUser);</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">			if (userRole.equalsIgnoreCase(&quot;user&quot;))</span>
+<span class="fc" id="L151">				url = &quot;/updateUserProfile.jsp&quot;;</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">			else if (userRole.equalsIgnoreCase(&quot;manager&quot;))</span>
+<span class="fc" id="L153">				url = &quot;/updateManagerProfile.jsp&quot;;</span>
+			else
+<span class="fc" id="L155">				url = &quot;/updateAdminProfile.jsp&quot;;</span>
+<span class="fc" id="L156">		}</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">		else if(action.equalsIgnoreCase(&quot;managerEditUser&quot;)){</span>
+<span class="fc" id="L158">			String userSelected = request.getParameter(&quot;userSelected&quot;);</span>
+<span class="fc" id="L159">			editUserUsername = userSelected;</span>
+			//user.validateUser(action, user, userErrorMsgs);
+<span class="fc" id="L161">			session.setAttribute(&quot;user&quot;, user);</span>
+<span class="fc" id="L162">			System.out.println(&quot;Selected User: &quot;+userSelected);</span>
+<span class="fc" id="L163">			System.out.println(&quot;update: &quot;+ user.getUsername());</span>
+<span class="fc" id="L164">			User updateUser = new User();</span>
+<span class="fc" id="L165">			updateUser = UserDAO.getUserByUsername(userSelected);</span>
+<span class="fc" id="L166">			session.setAttribute(&quot;UPDATEUSER&quot;, updateUser);</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">			if (userRole.equalsIgnoreCase(&quot;manager&quot;))</span>
+<span class="fc" id="L168">				url = &quot;/updateManagerProfile.jsp&quot;;</span>
+			else
+<span class="fc" id="L170">				url = &quot;/updateAdminProfile.jsp&quot;;</span>
+			//System.out.println(updateUser.getEmail());
+<span class="fc" id="L172">		}</span>
+		
+<span class="fc bfc" id="L174" title="All 2 branches covered.">		else if (action.equalsIgnoreCase(&quot;updateUserInDB&quot;)){</span>
+<span class="fc" id="L175">			getUserParam(request, user);</span>
+<span class="fc" id="L176">			user.validateUser(action, user, userErrorMsgs);</span>
+<span class="fc" id="L177">			session.setAttribute(&quot;user&quot;, user);</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">			if(!userErrorMsgs.getErrorMsg().equals(&quot;&quot;)){</span>
+<span class="fc" id="L179">				getUserParam(request, user);</span>
+<span class="fc" id="L180">				session.setAttribute(&quot;errorMsgs&quot;, userErrorMsgs);</span>
+				/*if (userRole.equalsIgnoreCase(&quot;user&quot;))
+					url=&quot;/updateUserProfile.jsp&quot;;
+<span class="fc bfc" id="L183" title="All 2 branches covered.">				else */if (userRole.equalsIgnoreCase(&quot;manager&quot;))</span>
+<span class="fc" id="L184">					url=&quot;/updateManagerProfile.jsp&quot;;</span>
+				else
+<span class="fc" id="L186">					url=&quot;/updateAdminProfile.jsp&quot;;</span>
+<span class="fc" id="L187">			}</span>
+			else{
+<span class="fc" id="L189">				UserDAO.updateUserDetails(user, editUserUsername);</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">				if (userRole.equalsIgnoreCase(&quot;user&quot;))</span>
+<span class="fc" id="L191">					url = &quot;/listUser.jsp&quot;;</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">				else if (userRole.equalsIgnoreCase(&quot;manager&quot;))</span>
+<span class="fc" id="L193">					url = &quot;/listManager.jsp&quot;;</span>
+				else
+<span class="fc" id="L195">					url = &quot;/listAdmin.jsp&quot;;</span>
+<span class="fc" id="L196">				System.out.println(&quot;update query&quot;);</span>
+			}
+			
+<span class="fc" id="L199">		}</span>
+		
+<span class="fc bfc" id="L201" title="All 2 branches covered.">		else if(action.equalsIgnoreCase(&quot;viewReservationList&quot;)){</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">			if (userRole.equalsIgnoreCase(&quot;user&quot;)){</span>
+<span class="fc" id="L203">				selectedUserReservation = editUserUsername;</span>
+<span class="fc" id="L204">			}</span>
+			else{
+<span class="fc" id="L206">				selectedUserReservation = request.getParameter(&quot;userSelected&quot;);</span>
+			}			
+<span class="fc" id="L208">			System.out.println(&quot;Reservations specific User selected: &quot; + selectedUserReservation);</span>
+			//user.validateUser(action, user, userErrorMsgs);
+<span class="fc" id="L210">			ArrayList&lt;Reservation&gt; ReservationInDB = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L211">			ReservationInDB =  ReservationDAO.searchReservationwithUsername(selectedUserReservation);</span>
+<span class="fc" id="L212">			session.setAttribute(&quot;RESERS&quot;, ReservationInDB);</span>
+<span class="fc" id="L213">			session.setAttribute(&quot;searchMsg&quot;, ReservationInDB.size() + &quot; Reservations Found!&quot;);</span>
+<span class="fc" id="L214">			session.removeAttribute(&quot;errorMsgs&quot;);</span>
+<span class="fc" id="L215">			url=&quot;/userReservationList.jsp&quot;;</span>
+<span class="fc" id="L216">		}</span>
+		
+<span class="fc bfc" id="L218" title="All 2 branches covered.">		else if(action.equalsIgnoreCase(&quot;managerEditRevervation&quot;)){</span>
+<span class="fc" id="L219">			selectedReservationID = request.getParameter(&quot;reservationSelected&quot;);</span>
+			//user.validateUser(action, user, userErrorMsgs);
+<span class="fc" id="L221">			session.setAttribute(&quot;user&quot;, user);</span>
+<span class="fc" id="L222">			System.out.println(&quot;Selected reservation: &quot;+ selectedReservationID);</span>
+<span class="fc" id="L223">			Reservation updateReser = new Reservation();</span>
+<span class="fc" id="L224">			updateReser = ReservationDAO.getReservationByID(selectedReservationID);</span>
+<span class="fc" id="L225">			session.setAttribute(&quot;UPDATERESER&quot;, updateReser);</span>
+<span class="fc" id="L226">			url = &quot;/updateReservation.jsp&quot;;</span>
+			//System.out.println(updateUser.getEmail());
+<span class="fc" id="L228">		}</span>
+		
+<span class="fc bfc" id="L230" title="All 2 branches covered.">		else if (action.equalsIgnoreCase(&quot;updateReservationInDB&quot;)){</span>
+<span class="fc" id="L231">			getReservationParam(request, reservation);</span>
+			//session.setAttribute(&quot;UPDATERESER&quot;, reservation);
+<span class="fc" id="L233">			System.out.println(&quot;Vehicle at param: &quot; + request.getParameter(&quot;vehiclenumber&quot;)+ &quot; &amp; Resv Date(param): &quot;+  request.getParameter(&quot;resvdate&quot;)+ &quot; &amp; ResvDate(obj) : &quot;+reservation.getResvdate()+&quot;Vehicle at obj: &quot; + reservation.getVehiclenumber());</span>
+<span class="fc" id="L234">			ReservationDAO.updateReservationDetails(reservation, selectedReservationID);</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">			if (userRole.equalsIgnoreCase(&quot;user&quot;))</span>
+<span class="fc" id="L236">				url = &quot;/listUser.jsp&quot;;</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">			else if (userRole.equalsIgnoreCase(&quot;manager&quot;))</span>
+<span class="fc" id="L238">				url = &quot;/listManager.jsp&quot;;</span>
+			else
+<span class="fc" id="L240">				url = &quot;/listAdmin.jsp&quot;;</span>
+<span class="fc" id="L241">			System.out.println(&quot;update query&quot;);			</span>
+<span class="fc" id="L242">		} </span>
+	
+		// Mansee Delete Reservation
+<span class="fc bfc" id="L245" title="All 2 branches covered.">		else if(action.equalsIgnoreCase(&quot;managerDeleteRevervation&quot;)){</span>
+<span class="fc" id="L246">			String selectedReservationID = request.getParameter(&quot;reservationSelected&quot;);</span>
+<span class="fc" id="L247">			System.out.println(&quot;Reservation id: &quot;+selectedReservationID);</span>
+<span class="fc" id="L248">			ReservationDAO.deleteReservationByManager(selectedReservationID);</span>
+<span class="fc" id="L249">			ReservationDAO.updateReservationSpotwithResID(selectedReservationID);;</span>
+<span class="fc" id="L250">			System.out.println(&quot;Deleted controller&quot;);</span>
+<span class="fc" id="L251">			url=&quot;/searchUser.jsp&quot;;</span>
+			
+<span class="fc" id="L253">		}</span>
+		
+		//new	
+<span class="fc bfc" id="L256" title="All 2 branches covered.">		else if(action.equalsIgnoreCase(&quot;searchForParkings&quot;) ) {  </span>
+		//	getParkingParam(request, parking);
+			
+<span class="fc bfc" id="L259" title="All 2 branches covered.">			if(userStatus.equals(String.valueOf(0))) {</span>
+<span class="fc" id="L260">				System.out.println(&quot;Sorry&quot;+userStatus);</span>
+<span class="fc" id="L261">				session.setAttribute(&quot;greetingField2&quot;, &quot;Can not make reservation as your privilage has been revoked.&quot;);</span>
+<span class="fc" id="L262">				url= &quot;/listUser.jsp&quot;;</span>
+<span class="fc" id="L263">			}</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">			else if (ReservationDAO.searchReservationwithUsername(session.getAttribute(&quot;username&quot;).toString()).size() &gt;=3){</span>
+<span class="fc" id="L265">				System.out.println(&quot;Sorry: Number of Reservations exceeded&quot;);</span>
+<span class="fc" id="L266">				session.setAttribute(&quot;greetingField2&quot;, &quot;Max Reservation Limit(3) achieved&quot;);</span>
+<span class="fc" id="L267">				url= &quot;/listUser.jsp&quot;;</span>
+<span class="fc" id="L268">			}</span>
+			else {
+<span class="fc" id="L270">				url=&quot;/searchParking.jsp&quot;;</span>
+			} 
+			
+<span class="fc" id="L273">		}</span>
+		//Akhsay
+		else {
+<span class="fc bfc" id="L276" title="All 2 branches covered.">			session.setAttribute(&quot;statusField&quot;, (session.getAttribute(&quot;status&quot;).toString().equals(&quot;1&quot;) ? &quot;Active&quot; : &quot;Revoked&quot;));</span>
+<span class="fc" id="L277">			System.out.println(&quot;Status at home: &quot; +session.getAttribute(&quot;status&quot;).toString());</span>
+<span class="fc" id="L278">			url = &quot;/listUser.jsp&quot;;</span>
+			
+		}		
+		
+<span class="fc" id="L282">		getServletContext().getRequestDispatcher(url).forward(request, response);		</span>
+<span class="fc" id="L283">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>Merged (Apr 30, 2019 2:10:14 AM)</div></body></html>
