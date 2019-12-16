@@ -6,9 +6,9 @@ Implemented a parking system web application from scratch, built on Java Servlet
 [Coverage Metrics for Java Classes](../master/Reports/Metrics.xlsx)
 
 ## Java Code Coverage Report
-![](../master/images/jacoco.png)
+![](https://github.com/Ap00rvSaxena/EZ-Park/imagesjacoco.png)
 > JaCoCo Report on src
 
 ## Mutation Coverage
-![](../master/images/pit.png)
+![](https://github.com/Ap00rvSaxena/EZ-Park/images/pit.png)
 > Pit Mutation Report on src/model
